@@ -9,6 +9,7 @@
 <header>
 <h1>RepairMen — ремонт бытовой техники</h1>
 <nav>
+<a href="tv.html">Телевизоры</a>
 <a href="index.html">Главная</a>
 <a href="registration.html">Регистрация мастера</a>
 <a href="wash.html">Стиральные машины</a>
@@ -22,8 +23,19 @@
 
 
 <main>
-<h2>Добро пожаловать!</h2>
-<p>Выберите категорию техники, чтобы найти подходящего мастера.</p>
+<h2>Оставить заявку на ремонт</h2>
+
+
+<form class="request-form">
+<label>ФИО:<input type="text" name="fio" required></label>
+<label>Тип техники:<input type="text" name="type" required></label>
+<label>Модель:<input type="text" name="model" required></label>
+<label>Описание поломки:<textarea name="problem" required></textarea></label>
+<label>Адрес клиента:<input type="text" name="address" required></label>
+<label>Телефон:<input type="tel" name="phone" required></label>
+<label>Дополнительная информация:<textarea name="extra"></textarea></label>
+<button class="button" type="submit">Отправить заявку</button>
+</form>
 </main>
 </body>
 </html>
