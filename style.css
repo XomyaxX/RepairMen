@@ -23,6 +23,10 @@ body.light {
   --success: #00b894;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: 'Roboto', sans-serif;
   margin: 0;
@@ -44,6 +48,8 @@ body {
   z-index: 1000;
   box-shadow: 0 4px 15px rgba(0,0,0,0.2);
   transition: transform 0.3s;
+  color: white;
+  font-size: 16px;
 }
 
 .theme-toggle:hover {
@@ -60,28 +66,21 @@ body {
   overflow: hidden;
 }
 
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="%23ffffff" opacity="0.1"><path d="M500 50L550 25L600 50L650 25L700 50L750 25L800 50L850 25L900 50L950 25L1000 50V100H0V50Z"/></svg>') bottom center repeat-x;
-}
-
 .hero h1 {
-  font-size: 3.5rem;
+  font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 20px;
   text-shadow: 0 2px 10px rgba(0,0,0,0.3);
 }
 
 .hero .subtitle {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 300;
   margin-bottom: 30px;
   opacity: 0.9;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .cta-button {
@@ -115,7 +114,7 @@ body {
 
 .benefits h2 {
   color: var(--accent);
-  font-size: 2.2rem;
+  font-size: 2rem;
   margin-bottom: 30px;
   text-align: center;
 }
@@ -123,10 +122,11 @@ body {
 .benefits ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .benefits ul li {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   margin: 20px 0;
   padding-left: 40px;
   position: relative;
@@ -146,21 +146,22 @@ body {
   max-width: 1000px;
   margin: 80px auto;
   background: var(--card-bg);
-  padding: 50px;
+  padding: 40px;
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
 .request-block h2 {
   color: var(--accent);
-  font-size: 2.2rem;
+  font-size: 2rem;
   margin-bottom: 30px;
   text-align: center;
 }
 
 .request-form {
-  display: grid;
-  gap: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .request-form label {
@@ -174,14 +175,14 @@ body {
 .request-form select,
 .request-form textarea {
   width: 100%;
-  padding: 15px;
+  padding: 12px 15px;
   border: 2px solid #e0e0e0;
-  border-radius: 10px;
+  border-radius: 8px;
   background: var(--bg);
   color: var(--text);
   font-size: 1rem;
   transition: all 0.3s;
-  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
 }
 
 .request-form input:focus,
@@ -192,10 +193,15 @@ body {
   outline: none;
 }
 
+.request-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
 .address-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
+  gap: 15px;
   margin: 20px 0;
 }
 
@@ -204,12 +210,13 @@ body {
   color: white;
   font-weight: 600;
   font-size: 1.1rem;
-  padding: 18px;
-  border-radius: 12px;
+  padding: 15px;
+  border-radius: 8px;
   border: none;
   cursor: pointer;
   transition: all 0.3s;
-  margin-top: 20px;
+  margin-top: 10px;
+  font-family: 'Roboto', sans-serif;
 }
 
 .button:hover {
@@ -231,26 +238,6 @@ body {
 
 /* Адаптивность */
 @media (max-width: 768px) {
-  .hero h1 {
-    font-size: 2.5rem;
-  }
-  
-  .hero .subtitle {
-    font-size: 1.1rem;
-  }
-  
-  .benefits,
-  .request-block {
-    margin: 40px 20px;
-    padding: 30px;
-  }
-  
-  .address-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 480px) {
   .hero {
     padding: 60px 20px;
   }
@@ -259,7 +246,39 @@ body {
     font-size: 2rem;
   }
   
+  .hero .subtitle {
+    font-size: 1rem;
+  }
+  
+  .benefits,
+  .request-block {
+    margin: 40px 20px;
+    padding: 30px 20px;
+  }
+  
+  .benefits h2,
+  .request-block h2 {
+    font-size: 1.5rem;
+  }
+  
+  .address-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+  
   .benefits ul li {
     font-size: 1rem;
+    padding-left: 30px;
+  }
+  
+  .request-form input,
+  .request-form select,
+  .request-form textarea {
+    padding: 10px 12px;
   }
 }
