@@ -2,40 +2,63 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8" />
-<title>Главная — Каталог мастеров</title>
+<title>RepairMen — ремонт бытовой техники</title>
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<header>
-<h1>RepairMen — ремонт бытовой техники</h1>
-<nav>
-<a href="tv.html">Телевизоры</a>
-<a href="index.html">Главная</a>
-<a href="registration.html">Регистрация мастера</a>
-<a href="wash.html">Стиральные машины</a>
-<a href="fridge.html">Холодильники</a>
-<a href="pc.html">Персональные компьютеры</a>
-<a href="panel.html">Варочные панели</a>
-<a href="conditioners.html">Кондиционеры</a>
-<a href="laptops.html">Ноутбуки</a>
-</nav>
+<header class="hero">
+<h1>RepairMen</h1>
+<p class="subtitle">Починим любую бытовую технику быстро и надёжно</p>
 </header>
 
 
 <main>
+<section class="benefits">
+<h2>Почему выбирают нас?</h2>
+<ul>
+<li>✔ Бесплатный выезд мастера на дом</li>
+<li>✔ Мастер приезжает в течение дня</li>
+<li>✔ Ремонтируем любую технику: стиралки, холодильники, ПК, ноутбуки, панели, кондиционеры, телевизоры</li>
+</ul>
+</section>
+
+
+<section class="request-block">
 <h2>Оставить заявку на ремонт</h2>
-
-
 <form class="request-form">
 <label>ФИО:<input type="text" name="fio" required></label>
-<label>Тип техники:<input type="text" name="type" required></label>
+
+
+<label>Тип техники:
+<select name="type" required>
+<option value="wash">Стиральная машина</option>
+<option value="fridge">Холодильник</option>
+<option value="pc">Персональный компьютер</option>
+<option value="laptops">Ноутбук</option>
+<option value="panel">Варочная панель</option>
+<option value="conditioners">Кондиционер</option>
+<option value="tv">Телевизор</option>
+</select>
+</label>
+
+
 <label>Модель:<input type="text" name="model" required></label>
 <label>Описание поломки:<textarea name="problem" required></textarea></label>
-<label>Адрес клиента:<input type="text" name="address" required></label>
+
+
+<div class="address-grid">
+<label>Город:<input type="text" name="city" required></label>
+<label>Улица:<input type="text" name="street" required></label>
+<label>Дом:<input type="text" name="house" required></label>
+<label>Квартира:<input type="text" name="flat"></label>
+<label>Домофон работает?:
+<select name="intercom" required>
+<option value="yes">Да</option>
+<option value="no">Нет</option>
+</select>
+</label>
+</div>
+
+
 <label>Телефон:<input type="tel" name="phone" required></label>
-<label>Дополнительная информация:<textarea name="extra"></textarea></label>
-<button class="button" type="submit">Отправить заявку</button>
-</form>
-</main>
-</body>
 </html>
