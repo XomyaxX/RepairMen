@@ -30,16 +30,28 @@ mastersBlock.appendChild(card);
 
 
 // Scroll reveal
-const revealElements = document.querySelectorAll('.reveal');
-function revealOnScroll() {
-const windowHeight = window.innerHeight;
-revealElements.forEach(el => {
-const elementTop = el.getBoundingClientRect().top;
-if(elementTop < windowHeight - 100) el.classList.add('visible');
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadMasters();
+
+  const revealElements = document.querySelectorAll('.hero, .benefits, .request-block, .master-card');
+
+  function revealOnScroll() {
+    const windowHeight = window.innerHeight;
+    revealElements.forEach(el => {
+      const elementTop = el.getBoundingClientRect().top;
+      if(elementTop < windowHeight - 100) el.classList.add('visible');
+    });
+  }
+
+  window.addEventListener('scroll', revealOnScroll);
+  revealOnScroll(); // сразу показать элементы на экране
 });
-}
-window.addEventListener('scroll', revealOnScroll);
-window.addEventListener('load', revealOnScroll);
+
+
+
 
 
 } catch(err){ console.error('Ошибка загрузки мастеров:', err); }
