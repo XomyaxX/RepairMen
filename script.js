@@ -29,29 +29,33 @@ mastersBlock.appendChild(card);
 });
 
 
-// Scroll reveal
 
 
-
-document.addEventListener('DOMContentLoaded', () => {
-  loadMasters();
-
-  const revealElements = document.querySelectorAll('.hero, .benefits, .request-block, .master-card');
-
-  function revealOnScroll() {
+// Простой scroll reveal
+function revealOnScroll() {
+  const reveals = document.querySelectorAll('.reveal');
+  
+  reveals.forEach(element => {
     const windowHeight = window.innerHeight;
-    revealElements.forEach(el => {
-      const elementTop = el.getBoundingClientRect().top;
-      if(elementTop < windowHeight - 100) el.classList.add('visible');
-    });
-  }
+    const elementTop = element.getBoundingClientRect().top;
+    const elementVisible = 150;
+    
+    if (elementTop < windowHeight - elementVisible) {
+      element.classList.add('visible');
+    }
+  });
+}
 
-  window.addEventListener('scroll', revealOnScroll);
-  revealOnScroll(); // сразу показать элементы на экране
+// Запускаем при загрузке и скролле
+window.addEventListener('load', revealOnScroll);
+window.addEventListener('scroll', revealOnScroll);
+
+// Обработчик формы
+document.querySelector('.request-form')?.addEventListener('submit', function(e) {
+  e.preventDefault();
+  alert('Заявка отправлена! Мы свяжемся с вами в ближайшее время.');
+  this.reset();
 });
-
-
-
 
 
 } catch(err){ console.error('Ошибка загрузки мастеров:', err); }
