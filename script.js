@@ -38,6 +38,20 @@ mastersBlock.appendChild(card);
 console.error("Ошибка загрузки мастеров:", err);
 }
 }
+const revealElements = document.querySelectorAll('.hero, .benefits, .request-block, .master-card');
+
+function revealOnScroll() {
+  const windowHeight = window.innerHeight;
+  revealElements.forEach(el => {
+    const elementTop = el.getBoundingClientRect().top;
+    if(elementTop < windowHeight - 100) {
+      el.classList.add('visible');
+    }
+  });
+}
+
+window.addEventListener('scroll', revealOnScroll);
+window.addEventListener('load', revealOnScroll);
 
 
 // Автозагрузка

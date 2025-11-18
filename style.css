@@ -1,4 +1,4 @@
-/* ГЛАВНЫЙ ШРИФТ */
+
 .address-grid {
 display: grid;
 grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -59,6 +59,15 @@ from { opacity: 0; }
 to { opacity: 1; }
 }
 
+@media(max-width:600px){
+  .address-grid {
+    grid-template-columns: 1fr;
+  }
+  .request-form input, .request-form select, .request-form textarea {
+    font-size: 14px;
+  }
+  .button { padding: 12px; font-size: 16px; }
+}
 
 @keyframes fadeInUp {
 from { opacity: 0; transform: translateY(20px); }
@@ -70,3 +79,40 @@ to { opacity: 1; transform: translateY(0); }
 from { opacity: 0; transform: translateY(-20px); }
 to { opacity: 1; transform: translateY(0); }
 }
+:root {
+  --bg: #0c0c0c;
+  --text: #e8e8e8;
+  --card-bg: #141414;
+  --accent: #00d9ff;
+  --accent-glow: rgba(0,217,255,0.5);
+}
+
+body.light {
+  --bg: #f9f9f9;
+  --text: #111;
+  --card-bg: #fff;
+  --accent: #0072ff;
+  --accent-glow: rgba(0,0,255,0.3);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.3s, color 0.3s;
+}
+
+.master-card {
+  border-left: 6px solid var(--accent);
+  background: var(--card-bg);
+  box-shadow: 0 0 20px rgba(0,0,0,.15);
+  border-radius: 20px;
+  padding: 20px;
+  transition: 0.4s;
+}
+
+.master-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px var(--accent-glow);
+}
+.reveal { opacity: 0; transform: translateY(20px); transition: all .6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
