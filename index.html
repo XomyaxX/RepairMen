@@ -9,16 +9,14 @@
 <body>
 <button class="theme-toggle" onclick="document.body.classList.toggle('light')">🌙/☀️</button>
 
-
-<header class="hero reveal visible">
+<header class="hero">
 <h1>RepairMen — быстрый и надёжный ремонт техники</h1>
 <p class="subtitle">Выезд мастера бесплатно • Приезжаем в день обращения • Гарантия на ремонт</p>
 <button class="cta-button" onclick="document.getElementById('request-form').scrollIntoView({behavior:'smooth'})">Вызвать мастера</button>
 </header>
 
-
 <main>
-<section class="benefits reveal">
+<section class="benefits">
 <h2>Почему выбирают нас?</h2>
 <ul>
 <li>✔ Бесплатный выезд мастера на дом</li>
@@ -27,12 +25,10 @@
 </ul>
 </section>
 
-
-<section class="request-block reveal" id="request-form">
+<section class="request-block" id="request-form">
 <h2>Оставить заявку на ремонт</h2>
 <form class="request-form">
 <label>ФИО:<input type="text" name="fio" required></label>
-
 
 <label>Тип техники:
 <select name="type" required>
@@ -46,10 +42,8 @@
 </select>
 </label>
 
-
 <label>Модель:<input type="text" name="model" required></label>
 <label>Описание поломки:<textarea name="problem" required></textarea></label>
-
 
 <div class="address-grid">
 <label>Город:<input type="text" name="city" required></label>
@@ -64,14 +58,21 @@
 </label>
 </div>
 
-
 <label>Телефон:<input type="tel" name="phone" required></label>
 <label>Дополнительная информация:<textarea name="extra"></textarea></label>
-
 
 <button class="button" type="submit">Отправить заявку</button>
 </form>
 </section>
 </main>
+
+<script>
+// Простая обработка формы
+document.querySelector('.request-form')?.addEventListener('submit', function(e) {
+  e.preventDefault();
+  alert('Заявка отправлена! Мы свяжемся с вами в ближайшее время.');
+  this.reset();
+});
+</script>
 </body>
 </html>

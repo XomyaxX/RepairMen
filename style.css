@@ -25,15 +25,16 @@ body.light {
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
   font-family: 'Roboto', sans-serif;
-  margin: 0;
   background: var(--bg);
   color: var(--text);
-  transition: background 0.3s, color 0.3s;
   line-height: 1.6;
+  padding: 20px;
 }
 
 .theme-toggle {
@@ -46,31 +47,24 @@ body {
   border-radius: 50px;
   cursor: pointer;
   z-index: 1000;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-  transition: transform 0.3s;
   color: white;
   font-size: 16px;
-}
-
-.theme-toggle:hover {
-  transform: scale(1.1);
 }
 
 /* Герой секция */
 .hero {
   text-align: center;
-  padding: 100px 20px;
+  padding: 80px 20px;
   background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
   color: white;
-  position: relative;
-  overflow: hidden;
+  border-radius: 15px;
+  margin-bottom: 40px;
 }
 
 .hero h1 {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 20px;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
 }
 
 .hero .subtitle {
@@ -78,9 +72,6 @@ body {
   font-weight: 300;
   margin-bottom: 30px;
   opacity: 0.9;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .cta-button {
@@ -93,7 +84,6 @@ body {
   border: none;
   cursor: pointer;
   transition: all 0.3s;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
 }
 
 .cta-button:hover {
@@ -103,12 +93,10 @@ body {
 
 /* Секция преимуществ */
 .benefits {
-  margin: 80px auto;
-  max-width: 1000px;
   background: var(--card-bg);
   padding: 40px;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  border-radius: 15px;
+  margin-bottom: 40px;
   border-left: 5px solid var(--accent);
 }
 
@@ -122,12 +110,11 @@ body {
 .benefits ul {
   list-style: none;
   padding: 0;
-  margin: 0;
 }
 
 .benefits ul li {
   font-size: 1.1rem;
-  margin: 20px 0;
+  margin: 15px 0;
   padding-left: 40px;
   position: relative;
 }
@@ -141,14 +128,16 @@ body {
   font-size: 1.5rem;
 }
 
-/* Форма заявки */
+/* Форма заявки - УБИРАЕМ ВСЕ СКРЫТИЯ */
 .request-block {
-  max-width: 1000px;
-  margin: 80px auto;
   background: var(--card-bg);
   padding: 40px;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  border-radius: 15px;
+  margin-bottom: 40px;
+  /* Убираем все эффекты скрытия */
+  opacity: 1 !important;
+  transform: none !important;
+  visibility: visible !important;
 }
 
 .request-block h2 {
@@ -181,7 +170,6 @@ body {
   background: var(--bg);
   color: var(--text);
   font-size: 1rem;
-  transition: all 0.3s;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -189,7 +177,6 @@ body {
 .request-form select:focus,
 .request-form textarea:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-glow);
   outline: none;
 }
 
@@ -214,71 +201,35 @@ body {
   border-radius: 8px;
   border: none;
   cursor: pointer;
-  transition: all 0.3s;
   margin-top: 10px;
-  font-family: 'Roboto', sans-serif;
 }
 
-.button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px var(--accent-glow);
-}
-
-/* Анимации */
+/* Убираем все анимации */
 .reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s ease;
-}
-
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
+  opacity: 1 !important;
+  transform: none !important;
 }
 
 /* Адаптивность */
 @media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+  
   .hero {
-    padding: 60px 20px;
+    padding: 40px 20px;
   }
   
   .hero h1 {
     font-size: 2rem;
   }
   
-  .hero .subtitle {
-    font-size: 1rem;
-  }
-  
   .benefits,
   .request-block {
-    margin: 40px 20px;
     padding: 30px 20px;
-  }
-  
-  .benefits h2,
-  .request-block h2 {
-    font-size: 1.5rem;
   }
   
   .address-grid {
     grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero h1 {
-    font-size: 1.8rem;
-  }
-  
-  .benefits ul li {
-    font-size: 1rem;
-    padding-left: 30px;
-  }
-  
-  .request-form input,
-  .request-form select,
-  .request-form textarea {
-    padding: 10px 12px;
   }
 }
