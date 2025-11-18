@@ -1,22 +1,17 @@
 body {
-font-family: Arial, sans-serif;
-margin: 0;
-background: #f2f2f2;
-}
-
-
-header {
-background: #333;
-color: white;
-padding: 20px;
 }
 
 
 nav a {
-color: white;
-margin-right: 15px;
+color: #00d9ff;
+margin-right: 20px;
 text-decoration: none;
 font-weight: bold;
+transition: 0.3s;
+}
+nav a:hover {
+color: #fff;
+text-shadow: 0 0 8px #00d9ff;
 }
 
 
@@ -33,11 +28,16 @@ gap: 20px;
 
 
 .master-card {
-background: white;
-padding: 15px;
-border-radius: 8px;
-box-shadow: 0 0 5px rgba(0,0,0,0.2);
+background: #141414;
+padding: 18px;
+border-radius: 12px;
+box-shadow: 0 0 15px rgba(0,0,0,0.6), 0 0 12px rgba(0, 217, 255, 0.2);
 text-align: center;
+transition: 0.3s;
+}
+.master-card:hover {
+transform: translateY(-5px);
+box-shadow: 0 0 18px rgba(0, 217, 255, 0.45);
 }
 
 
