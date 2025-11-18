@@ -1,0 +1,59 @@
+body {
+font-family: Arial, sans-serif;
+margin: 0;
+background: #f2f2f2;
+}
+
+
+header {
+background: #333;
+color: white;
+padding: 20px;
+}
+
+
+nav a {
+color: white;
+margin-right: 15px;
+text-decoration: none;
+font-weight: bold;
+}
+
+
+main {
+padding: 20px;
+}
+
+
+.master-list {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+gap: 20px;
+}
+
+
+.master-card {
+background: white;
+padding: 15px;
+border-radius: 8px;
+box-shadow: 0 0 5px rgba(0,0,0,0.2);
+text-align: center;
+}
+
+
+.master-card img {
+width: 100%;
+border-radius: 8px;
+margin-bottom: 10px;
+}
+
+
+.button {
+background: #4CAF50;
+padding: 12px 20px;
+color: white;
+text-decoration: none;
+border-radius: 8px;
+display: inline-block;
+margin-top: 20px;
+}
