@@ -53,8 +53,27 @@ window.addEventListener('scroll', revealOnScroll);
 // Обработчик формы
 document.querySelector('.request-form')?.addEventListener('submit', function(e) {
   e.preventDefault();
-  alert('Заявка отправлена! Мы свяжемся с вами в ближайшее время.');
-  this.reset();
+
+  // Получаем значение типа техники
+  const type = this.type.value;
+
+  // Назначаем соответствующую страницу
+  const pages = {
+    wash: 'wash.html',
+    fridge: 'fridge.html',
+    pc: 'pc.html',
+    laptops: 'laptops.html',
+    panel: 'panel.html',
+    conditioners: 'conditioners.html',
+    tv: 'tv.html'
+  };
+
+  // Перенаправление
+  if (pages[type]) {
+    window.location.href = pages[type];
+  } else {
+    alert('Ошибка: неизвестный тип техники.');
+  }
 });
 
 
