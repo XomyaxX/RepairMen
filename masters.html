@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<h2>Информация о вашей заявке</h2>
+<p><strong>Тип техники:</strong> <span id="req-type"></span></p>
+<p><strong>Модель:</strong> <span id="req-model"></span></p>
+<p><strong>Описание поломки:</strong> <span id="req-problem"></span></p>
+</section>
+
+
+<section class="masters-list" id="masters-list">
+<h2>Доступные мастера</h2>
+<div id="masters-cards" class="cards-grid"></div>
+</section>
+</main>
+
+
+<script>
+// Получение данных из URL
+const params = new URLSearchParams(window.location.search);
+const type = params.get('type');
+const model = params.get('model');
+const problem = params.get('problem');
+
+
+// Заполнение информации о заявке
+document.getElementById('req-type').textContent = type || "—";
+document.getElementById('req-model').textContent = model || "—";
+document.getElementById('req-problem').textContent = problem || "—";
+
+
+// Пример данных мастеров (можно привязать к Google Sheets)
+const masters = [
+{
+name: "Иванов Сергей Петрович",
+exp: 12,
+phone: "+7 999 123-45-67",
+photo: "img/masters/1.png",
+category: "Холодильники"
+},
+{
+name: "Павлов Дмитрий Олегович",
+exp: 8,
+phone: "+7 999 555-11-22",
+photo: "img/masters/2.png",
+category: "Стиральные машины"
+},
+{
+name: "Сидоров Алексей Николаевич",
+exp: 15,
+phone: "+7 999 777-33-44",
+photo: "img/masters/3.png",
+category: "Телевизоры"
+}
+];
+
+
+// Фильтрация по типу техники
+const filtered = masters.filter(m => m.category === type);
+
+
+const list = filtered.length ? filtered : masters;
+
+
+const container = document.getElementById('masters-cards');
+
+
+list.forEach(m => {
+const card = document.createElement('div');
+card.className = 'master-card';
+card.innerHTML = `
+<img src="${m.photo}" alt="${m.name}" class="master-photo">
+<h3>${m.name}</h3>
+<p><strong>Опыт:</strong> ${m.exp} лет</p>
+<p><strong>Телефон:</strong> ${m.phone}</p>
+<button class="call-btn">Позвонить</button>
+`;
+container.appendChild(card);
+});
+</script>
+</body>
+</html>
