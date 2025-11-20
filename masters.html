@@ -1,80 +1,69 @@
 <!DOCTYPE html>
-<h2>Информация о вашей заявке</h2>
-<p><strong>Тип техники:</strong> <span id="req-type"></span></p>
-<p><strong>Модель:</strong> <span id="req-model"></span></p>
-<p><strong>Описание поломки:</strong> <span id="req-problem"></span></p>
-</section>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RepairMen — Мастера</title>
 
+    
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
 
-<section class="masters-list" id="masters-list">
-<h2>Доступные мастера</h2>
-<div id="masters-cards" class="cards-grid"></div>
-</section>
-</main>
+<header>Наши мастера RepairMen</header>
 
+<div class="container">
+    <div id="masters" class="masters-grid"></div>
+</div>
 
 <script>
-// Получение данных из URL
-const params = new URLSearchParams(window.location.search);
-const type = params.get('type');
-const model = params.get('model');
-const problem = params.get('problem');
+// === URL таблицы ===
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRY6KMZf4V6FC_dXc6yPEi1Yt1e267LVIC8Ewsm4IMTtEtwNOAeBEnrNsl-TWArKAylzdy6AipcUDf3/pub?output=csv";
 
+// Получаем параметры (тип техники)
+const urlParams = new URLSearchParams(window.location.search);
+const selectedType = urlParams.get("type");
 
-// Заполнение информации о заявке
-document.getElementById('req-type').textContent = type || "—";
-document.getElementById('req-model').textContent = model || "—";
-document.getElementById('req-problem').textContent = problem || "—";
+async function loadMasters() {
+    try {
+        const response = await fetch(SHEET_URL);
+        const csv = await response.text();
+        const rows = csv.split("
+").map(r => r.split(","));
 
+        const headers = rows[0];
+        const data = rows.slice(1);
 
-// Пример данных мастеров (можно привязать к Google Sheets)
-const masters = [
-{
-name: "Иванов Сергей Петрович",
-exp: 12,
-phone: "+7 999 123-45-67",
-photo: "img/masters/1.png",
-category: "Холодильники"
-},
-{
-name: "Павлов Дмитрий Олегович",
-exp: 8,
-phone: "+7 999 555-11-22",
-photo: "img/masters/2.png",
-category: "Стиральные машины"
-},
-{
-name: "Сидоров Алексей Николаевич",
-exp: 15,
-phone: "+7 999 777-33-44",
-photo: "img/masters/3.png",
-category: "Телевизоры"
+        const mastersContainer = document.getElementById("masters");
+        mastersContainer.innerHTML = "";
+
+        data.forEach((row, i) => {
+            const master = Object.fromEntries(headers.map((h, j) => [h.trim(), row[j]]));
+
+            // фильтрация
+            if (selectedType && master.category !== selectedType) return;
+
+            const card = document.createElement("div");
+            card.className = "master-card";
+
+            card.innerHTML = `
+                <img class="master-photo" src="${master.photo}" alt="Фото мастера" />
+                <div class="master-name">${master.fio}</div>
+                <div class="master-exp">Опыт: ${master.exp} лет</div>
+                <a class="master-phone" href="tel:${master.phone}">Позвонить: ${master.phone}</a>
+            `;
+
+            mastersContainer.appendChild(card);
+
+            setTimeout(() => card.classList.add("reveal"), 100 * i);
+        });
+    } catch (e) {
+        console.error("Ошибка загрузки мастеров", e);
+    }
 }
-];
 
-
-// Фильтрация по типу техники
-const filtered = masters.filter(m => m.category === type);
-
-
-const list = filtered.length ? filtered : masters;
-
-
-const container = document.getElementById('masters-cards');
-
-
-list.forEach(m => {
-const card = document.createElement('div');
-card.className = 'master-card';
-card.innerHTML = `
-<img src="${m.photo}" alt="${m.name}" class="master-photo">
-<h3>${m.name}</h3>
-<p><strong>Опыт:</strong> ${m.exp} лет</p>
-<p><strong>Телефон:</strong> ${m.phone}</p>
-<button class="call-btn">Позвонить</button>
-`;
-container.appendChild(card);
-});
+loadMasters();
 </script>
+
 </body>
 </html>
