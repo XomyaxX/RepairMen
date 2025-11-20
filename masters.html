@@ -28,8 +28,7 @@ async function loadMasters() {
     try {
         const response = await fetch(SHEET_URL);
         const csv = await response.text();
-        const rows = csv.split("
-").map(r => r.split(","));
+        const rows = csv.split("").map(r => r.split(","));
 
         const headers = rows[0];
         const data = rows.slice(1);
@@ -65,5 +64,18 @@ async function loadMasters() {
 loadMasters();
 </script>
 
+<script>
+// Scroll reveal animation
+const revealCards = () => {
+  document.querySelectorAll('.master-card').forEach(card => {
+    const rect = card.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50) {
+      card.classList.add('visible');
+    }
+  });
+};
+window.addEventListener('scroll', revealCards);
+window.addEventListener('load', revealCards);
+</script>
 </body>
 </html>
