@@ -1,17 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RepairMen — Мастера</title>
+
+    
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header>Наши мастера RepairMen</header>
+
+<div class="container">
+    <div id="masters" class="masters-grid"></div>
+</div>
+
 <script>
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRY6KMZf4V6FC_dXc6yPEi1Yt1e267LVIC8Ewsm4IMTtEtwNOAeBEnrNsl-TWArKAylzdy6AipcUDf3/pub?output=csv";
-
-// Получаем параметр типа техники
 const urlParams = new URLSearchParams(window.location.search);
 const selectedType = urlParams.get("type");
 
 async function loadMasters() {
     try {
         const response = await fetch(SHEET_URL);
-        let csv = await response.text();
-        csv = csv.replace(/\r/g, ""); // удаляем carriage return
-        const rows = csv.split("\n").map(r => r.split(","));
-
+        const csv = await response.text();
+        const rows = csv.trim().split('\n').map(r => r.split(','));
         const headers = rows[0].map(h => h.trim());
         const data = rows.slice(1);
 
@@ -19,41 +33,47 @@ async function loadMasters() {
         mastersContainer.innerHTML = "";
 
         data.forEach((row, i) => {
-            const master = {};
-            headers.forEach((h, j) => master[h] = row[j]?.trim());
+            const master = Object.fromEntries(headers.map((h, j) => [h, row[j] || ""]));
 
-            // фильтрация по типу
-            if (selectedType && master["Категория"] !== selectedType) return;
+            // фильтрация по категории, если есть
+            if (selectedType && master.category && master.category !== selectedType) return;
 
             const card = document.createElement("div");
-            card.className = "master-card reveal";
+            card.className = "master-card";
+
             card.innerHTML = `
-                <img class="master-photo" src="${master["Фото"] || 'https://via.placeholder.com/150'}" alt="Фото мастера" />
-                <div class="master-name">${master["ФИО"]}</div>
-                <div class="master-exp">Опыт: ${master["Опыт"]}</div>
-                <a class="master-phone" href="tel:${master["Телефон"]}">Позвонить: ${master["Телефон"]}</a>
+                <img class="master-photo" src="${master.photo || 'https://via.placeholder.com/120'}" alt="Фото мастера" />
+                <div class="master-name">${master.fio || 'Без имени'}</div>
+                <div class="master-exp">Опыт: ${master.exp || '0'} лет</div>
+                <a class="master-phone" href="tel:${master.phone || ''}">Позвонить: ${master.phone || '-'}</a>
             `;
 
             mastersContainer.appendChild(card);
 
             setTimeout(() => card.classList.add("visible"), 100 * i);
         });
+
+        // Запуск reveal после вставки карточек
+        revealCards();
+
     } catch (e) {
-        console.error("Ошибка загрузки мастеров:", e);
+        console.error("Ошибка загрузки мастеров", e);
     }
 }
 
-loadMasters();
-
 // Scroll reveal
-const revealCards = () => {
+function revealCards() {
     document.querySelectorAll('.master-card').forEach(card => {
         const rect = card.getBoundingClientRect();
         if (rect.top < window.innerHeight - 50) {
             card.classList.add('visible');
         }
     });
-};
+}
+
 window.addEventListener('scroll', revealCards);
-window.addEventListener('load', revealCards);
+window.addEventListener('load', loadMasters);
+
 </script>
+</body>
+</html>
