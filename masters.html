@@ -1,40 +1,57 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>RepairMen — Мастера</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RepairMen — Мастера</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <button class="theme-toggle" id="themeToggle2">🌙/☀️</button>
 
-  <header class="hero small">
+<header class="hero small">
+  <div class="container">
     <h1>Мастера RepairMen</h1>
     <p class="subtitle">Подобрали под вашу заявку</p>
-  </header>
-
-  <main class="container">
-    <section class="request-info-card" id="request-info">
-      <h2>Ваша заявка</h2>
-      <p><strong>Тип техники:</strong> <span id="req-type">—</span></p>
-      <p><strong>Модель:</strong> <span id="req-model">—</span></p>
-      <p><strong>Описание:</strong> <span id="req-problem">—</span></p>
-    </section>
-
-    <section class="masters-list">
-      <h2>Доступные мастера</h2>
-      <div id="masters" class="masters-grid"></div>
-    </section>
-  </main>
-
-  <div id="previewModal" class="modal hidden">
-    <div class="modal-inner">
-      <button class="modal-close" id="modalClose">✕</button>
-      <div id="modalContent"></div>
-    </div>
   </div>
+</header>
 
-  <script src="masters.js" defer></script>
+<main class="container">
+
+  <!-- Информация о заявке -->
+  <section class="request-info-card">
+    <h2>Ваша заявка</h2>
+    <p><strong>Тип техники:</strong> <span id="req-type">—</span></p>
+    <p><strong>Модель:</strong> <span id="req-model">—</span></p>
+    <p><strong>Описание:</strong> <span id="req-problem">—</span></p>
+  </section>
+
+  <!-- Фильтр (по категориям) -->
+  <section class="filter-block">
+    <label>Фильтр по категории:
+      <select id="filter-category">
+        <option value="all">Все</option>
+        <option value="washing_machine">Стиральная машина</option>
+        <option value="fridge">Холодильник</option>
+        <option value="dishwasher">Посудомоечная машина</option>
+        <option value="oven">Духовой шкаф / Варочная панель</option>
+        <option value="ac">Кондиционер</option>
+      </select>
+    </label>
+  </section>
+
+  <!-- Сетка мастеров -->
+  <section id="masters" class="masters-grid"></section>
+
+</main>
+
+<!-- Модальное окно мастера -->
+<div id="previewModal" class="modal hidden">
+  <div class="modal-inner">
+    <button class="modal-close" id="modalClose">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script src="masters.js" defer></script>
 </body>
 </html>
