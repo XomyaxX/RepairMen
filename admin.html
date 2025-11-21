@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Заявки</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Заявки на ремонт</h1>
+        <div id="requests-list"></div>
+        <button onclick="clearRequests()">Очистить все заявки</button>
+        <button onclick="exportRequests()">Экспорт в JSON</button>
+    </div>
+
+    <script>
+        function loadRequests() {
+            const requests = JSON.parse(localStorage.getItem('repair_requests') || '[]');
+            const container = document.getElementById('requests-list');
+            
+            if (requests.length === 0) {
+                container.innerHTML = '<p>Нет сохранённых заявок</p>';
+                return;
+            }
+            
+            container.innerHTML = requests.map((request, index) => `
+                <div class="request-card" style="background: var(--card-bg); padding: 20px; margin: 10px 0; border-radius: 10px;">
+                    <h3>Заявка #${index + 1}</h3>
+                    <p><strong>ФИО:</strong> ${request.fio}</p>
+                    <p><strong>Телефон:</strong> ${request.phone}</p>
+                    <p><strong>Тип техники:</strong> ${request.type}</p>
+                    <p><strong>Модель:</strong> ${request.model}</p>
+                    <p><strong>Проблема:</strong> ${request.problem}</p>
+                    <p><strong>Адрес:</strong> ${request.city}, ${request.street}, ${request.house}</p>
+                    <p><strong>Время:</strong> ${new Date(request.timestamp).toLocaleString()}</p>
+                </div>
+            `).join('');
+        }
+        
+        function clearRequests() {
+            if (confirm('Удалить все заявки?')) {
+                localStorage.removeItem('repair_requests');
+                loadRequests();
+            }
+        }
+        
+        function exportRequests() {
+            const requests = JSON.parse(localStorage.getItem('repair_requests') || '[]');
+            const dataStr = JSON.stringify(requests, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = 'repair_requests.json';
+            link.click();
+        }
+        
+        document.addEventListener('DOMContentLoaded', loadRequests);
+    </script>
+</body>
+</html>
