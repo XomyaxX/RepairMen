@@ -1,3 +1,29 @@
+// Аварийный переключатель темы
+window.forceToggleTheme = function() {
+    console.log('Принудительное переключение темы...');
+    const body = document.body;
+    body.classList.toggle('light');
+    localStorage.setItem('theme', body.classList.contains('light') ? 'light' : 'dark');
+    console.log('Тема переключена. Светлая тема:', body.classList.contains('light'));
+    
+    // Обновляем кнопку
+    const toggleBtn = document.querySelector('.theme-toggle');
+    if (toggleBtn) {
+        toggleBtn.textContent = body.classList.contains('light') ? '🌙' : '☀️';
+    }
+};
+
+// Замените onclick на forceToggleTheme для тестирования
+document.addEventListener('DOMContentLoaded', function() {
+    const toggleBtn = document.querySelector('.theme-toggle');
+    if (toggleBtn) {
+        toggleBtn.setAttribute('onclick', 'forceToggleTheme()');
+        console.log('Кнопка переключения темы найдена и обновлена');
+    } else {
+        console.error('Кнопка переключения темы не найдена!');
+    }
+    initTheme();
+});
 // ================================
 //   Система управления темой
 // ================================
