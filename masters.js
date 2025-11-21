@@ -1,7 +1,7 @@
 // ================================
 //   URL Google Apps Script
 // ================================
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx-DDv0LP_K5BK1RNjak_K6bwfFc9eCVJmaT1IIjiVvlDNcYYTcC_kP_-uki7lSqyMj0w/exec";
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRY6KMZf4V6FC_dXc6yPEi1Yt1e267LVIC8Ewsm4IMTtEtwNOAeBEnrNsl-TWArKAylzdy6AipcUDf3/pub?output=csv";
 
 // ================================
 //   Отправка заявки
