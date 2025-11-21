@@ -98,3 +98,33 @@ document.addEventListener('DOMContentLoaded', function() {
     populateRequestInfo();
     loadMasters();
 });
+function populateRequestInfo() {
+    const params = new URLSearchParams(location.search);
+    
+    console.log('Все параметры URL:', {
+        type: params.get('type'),
+        model: params.get('model'), 
+        problem: params.get('problem'),
+        fullURL: window.location.href
+    });
+    
+    const rawType = params.get('type');
+    const model = params.get('model');
+    const problem = params.get('problem');
+    
+    const typeDisplay = TYPE_MAP[rawType] || rawType || 'Не указан';
+    
+    const elType = document.getElementById('req-type');
+    const elModel = document.getElementById('req-model');
+    const elProblem = document.getElementById('req-problem');
+
+    console.log('Найденные элементы:', {
+        elType: !!elType,
+        elModel: !!elModel, 
+        elProblem: !!elProblem
+    });
+
+    if (elType) elType.textContent = typeDisplay;
+    if (elModel) elModel.textContent = model || 'Не указана';
+    if (elProblem) elProblem.textContent = problem || 'Не указано';
+}
