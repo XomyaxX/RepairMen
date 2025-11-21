@@ -248,3 +248,15 @@ document.addEventListener('DOMContentLoaded', function() {
         loadMasters();
     }
 });
+// Временный код для отладки передачи параметров
+console.log('Параметры текущей страницы:', Object.fromEntries(new URLSearchParams(window.location.search)));
+
+// Если мы на masters.html, покажем детальную информацию
+if (window.location.pathname.includes('masters.html')) {
+    console.log('=== ДЕТАЛЬНАЯ ИНФОРМАЦИЯ О ПАРАМЕТРАХ ===');
+    const params = new URLSearchParams(window.location.search);
+    console.log('type:', params.get('type'));
+    console.log('model:', params.get('model')); 
+    console.log('problem:', params.get('problem'));
+    console.log('Полный URL:', window.location.href);
+}
