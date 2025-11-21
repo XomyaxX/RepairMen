@@ -7,12 +7,17 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <button class="theme-toggle" id="themeToggle">🌙/☀️</button>
+
+  <!-- Переключатель темы -->
+  <label class="theme-toggle">
+    <input type="checkbox" id="theme-switch">
+    <span>🌙 / ☀️</span>
+  </label>
 
   <header class="hero">
     <h1>RepairMen</h1>
     <p class="subtitle">Выезд мастера бесплатно • Приезжаем в день обращения • Гарантия на ремонт</p>
-    <button class="cta-button" id="toForm">Вызвать мастера</button>
+    <button class="cta-button" id="scroll-to-form">Вызвать мастера</button>
   </header>
 
   <main>
@@ -21,36 +26,53 @@
       <p>Стиральные машины, холодильники, ПК, ноутбуки, варочные панели, кондиционеры, телевизоры и другая бытовая техника.</p>
       <ul>
         <li>Бесплатный выезд мастера</li>
-        <li>Мастер приезжает в течение дня</li>
+        <li>Приезд в день обращения</li>
         <li>Гарантия до 2 лет</li>
       </ul>
     </section>
 
-    <section class="request-block" id="requestBlock">
+    <section class="request-block" id="request-form-block">
       <h2>Оставить заявку на ремонт</h2>
-      <form id="repairForm" class="request-form">
-        <label>ФИО:<input name="fio" type="text" required></label>
+
+      <form id="repair-form" class="request-form">
+
+        <label>ФИО:
+          <input name="fio" type="text" required>
+        </label>
 
         <label>Тип техники:
           <select name="type" required>
-            <option value="wash">Стиральная машина</option>
+            <option value="washing_machine">Стиральная машина</option>
             <option value="fridge">Холодильник</option>
             <option value="pc">Персональный компьютер</option>
-            <option value="laptops">Ноутбук</option>
-            <option value="panel">Варочная панель</option>
-            <option value="conditioners">Кондиционер</option>
-            <option value="tv">Телевизор</option>
+            <option value="laptop">Ноутбук</option>
+            <option value="oven">Варочная панель / Духовка</option>
+            <option value="ac">Кондиционер</option>
+            <option value="dishwasher">Посудомоечная машина</option>
           </select>
         </label>
 
-        <label>Модель:<input name="model" type="text" required></label>
-        <label>Описание поломки:<textarea name="problem" required></textarea></label>
+        <label>Модель:
+          <input name="model" type="text" required>
+        </label>
+
+        <label>Описание поломки:
+          <textarea name="problem" required></textarea>
+        </label>
 
         <div class="address-grid">
-          <label>Город:<input name="city" type="text" required></label>
-          <label>Улица:<input name="street" type="text" required></label>
-          <label>Дом:<input name="house" type="text" required></label>
-          <label>Квартира:<input name="flat" type="text"></label>
+          <label>Город:
+            <input name="city" type="text" required>
+          </label>
+          <label>Улица:
+            <input name="street" type="text" required>
+          </label>
+          <label>Дом:
+            <input name="house" type="text" required>
+          </label>
+          <label>Квартира:
+            <input name="flat" type="text">
+          </label>
           <label>Домофон работает?:
             <select name="intercom" required>
               <option value="yes">Да</option>
@@ -59,18 +81,27 @@
           </label>
         </div>
 
-        <label>Телефон:<input name="phone" type="tel" required placeholder="+7..."></label>
-        <label>Дополнительно:<textarea name="extra"></textarea></label>
+        <label>Телефон:
+          <input name="phone" type="text" required placeholder="8900...">
+        </label>
+
+        <label>Дополнительно:
+          <textarea name="extra"></textarea>
+        </label>
 
         <div class="form-row">
           <button class="button" type="submit">Отправить заявку</button>
-          <button class="button secondary" id="findMasters" type="button">Найти мастера</button>
+          <button class="button secondary find-master-btn" type="button">Найти мастера</button>
         </div>
+
       </form>
+
     </section>
   </main>
 
-  <div id="popup-root"></div>
+  <!-- Попапы -->
+  <div id="error-popup" class="popup">Номер телефона введён неверно</div>
+  <div id="success-popup" class="popup">Заявка отправлена!</div>
 
   <script src="script.js" defer></script>
 </body>

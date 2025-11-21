@@ -1,68 +1,73 @@
-// --- Настройка: вставь сюда URL своего Google Apps Script Web App (doPost) ---
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx-DDv0LP_K5BK1RNjak_K6bwfFc9eCVJmaT1IIjiVvlDNcYYTcC_kP_-uki7lSqyMj0w/exec";
+// --- ВЫБОР ТЕМЫ (СОХРАНЕНИЕ В localStorage) ---
+const themeSwitch = document.getElementById("theme-switch");
 
-// Popup (фирменный)
-function showPopup(text, isError=false){
-  const root = document.getElementById('popup-root');
-  const el = document.createElement('div');
-  el.className = 'popup';
-  el.style.cssText = `position:fixed;right:20px;bottom:20px;padding:14px 18px;border-radius:12px;background:${isError?'#e74c3c':'var(--accent)'};color:#000;box-shadow:0 8px 30px rgba(0,0,0,0.3);z-index:9999`;
-  el.textContent = text;
-  root.appendChild(el);
-  setTimeout(()=>{el.style.opacity='0';el.style.transform='translateY(10px)';},2200);
-  setTimeout(()=>root.removeChild(el),2600);
+// Применяем сохранённую тему при загрузке
+(function applySavedTheme() {
+    const saved = localStorage.getItem("theme") || "light";
+    document.body.classList.toggle("dark", saved === "dark");
+    if (themeSwitch) themeSwitch.checked = saved === "dark";
+})();
+
+// Смена темы
+if (themeSwitch) {
+    themeSwitch.addEventListener("change", () => {
+        const newTheme = themeSwitch.checked ? "dark" : "light";
+        document.body.classList.toggle("dark", newTheme === "dark");
+        localStorage.setItem("theme", newTheme);
+    });
 }
 
-// Theme toggle
-function initThemeToggle(buttonId){
-  const btn = document.getElementById(buttonId);
-  btn?.addEventListener('click', ()=>document.body.classList.toggle('light'));
+
+// --- ВАЛИДАЦИЯ ФОРМЫ ---
+const form = document.getElementById("repair-form");
+
+function validatePhone(phone) {
+    return /^\d{10,15}$/.test(phone);
 }
 
-// Form handling: send to Google Apps Script, then redirect to masters.html with query
-document.addEventListener('DOMContentLoaded', ()=>{
-  initThemeToggle('themeToggle');
-  initThemeToggle('themeToggle2');
+function showPopup(id) {
+    const popup = document.getElementById(id);
+    popup.classList.add("show");
+    setTimeout(() => popup.classList.remove("show"), 3000);
+}
 
-  const form = document.getElementById('repairForm');
-  const findBtn = document.getElementById('findMasters');
-  const toForm = document.getElementById('toForm');
 
-  toForm?.addEventListener('click', ()=>document.getElementById('requestBlock').scrollIntoView({behavior:'smooth'}));
+if (form) {
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
 
-  findBtn?.addEventListener('click', ()=>{
-    const type = form.type.value;
-    // перенаправляем на страницу мастеров с параметром type
-    window.location.href = `masters.html?type=${encodeURIComponent(type)}`;
-  });
+        const formData = new FormData(form);
+        const type = formData.get("type");
+        const phone = formData.get("phone");
 
-  form?.addEventListener('submit', async (e)=>{
-    e.preventDefault();
-    const fd = new FormData(form);
-    const data = Object.fromEntries(fd.entries());
+        if (!validatePhone(phone)) {
+            showPopup("error-popup");
+            return;
+        }
 
-    showPopup('Отправка заявки...');
+        // Формирование URL для перехода
+        const params = new URLSearchParams();
+        params.append("type", type);
+        params.append("model", formData.get("model"));
+        params.append("problem", formData.get("problem"));
 
-    if (GOOGLE_SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbx-DDv0LP_K5BK1RNjak_K6bwfFc9eCVJmaT1IIjiVvlDNcYYTcC_kP_-uki7lSqyMj0w/exec'){
-      // Если нет Apps Script — просто перенаправляем и показываем сообщение
-      showPopup('Заявка сохранена локально (Apps Script не настроен).', false);
-      const params = new URLSearchParams(data).toString();
-      window.location.href = `masters.html?${params}`;
-      return;
-    }
+        // Отправка на Google Script (опционально)
+        fetch("https://script.google.com/macros/s/AKfycbywkW9p_7VKpqk_I2RMnpsHuZWS5pWkYVJogntkyaqQGdvuL9RZ5M1xBcXiMZk5OvK5/exec", {
+            method: "POST",
+            body: formData
+        });
 
-    try{
-      const res = await fetch(GOOGLE_SCRIPT_URL, {
-        method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)
-      });
-      if (!res.ok) throw new Error('Ошибка отправки');
-      showPopup('Заявка отправлена успешно');
-      // перенаправим с данными
-      const params = new URLSearchParams(data).toString();
-      window.location.href = `masters.html?${params}`;
-    }catch(err){
-      console.error(err);
-      showPopup('Ошибка отправки заявки', true);
-    }
-  });
-});
+        // Переход на страницу мастеров
+        window.location.href = "masters.html?" + params.toString();
+    });
+}
+
+
+// --- ПЛАВНАЯ АНИМАЦИЯ КНОПКИ ---
+const findBtn = document.querySelector(".find-master-btn");
+if (findBtn) {
+    findBtn.addEventListener("click", () => {
+        findBtn.classList.add("clicked");
+        setTimeout(() => findBtn.classList.remove("clicked"), 300);
+    });
+}
