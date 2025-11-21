@@ -1,7 +1,7 @@
 // ================================
 //   URL Google Apps Script
 // ================================
-const GOOGLE_SCRIPT_URL = "ВСТАВЬ_СЮДА_ССЫЛКУ_ОТ_APPS_SCRIPT";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx-DDv0LP_K5BK1RNjak_K6bwfFc9eCVJmaT1IIjiVvlDNcYYTcC_kP_-uki7lSqyMj0w/exec";
 
 
 // ================================
