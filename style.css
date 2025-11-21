@@ -636,3 +636,17 @@ body {
         min-width: auto;
     }
 }
+/* Стили для аватаров в отзывах */
+.client-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+    object-fit: cover;
+}
+
+/* Уберите старый стиль для .client-avatar (если был) */
+.client-avatar {
+    /* Удалите background и другие старые свойства */
+    background: none; /* или просто удалите эту строку */
+}

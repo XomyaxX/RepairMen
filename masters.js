@@ -125,3 +125,20 @@ document.addEventListener('DOMContentLoaded', function() {
     populateRequestInfo();
     loadMasters();
 });
+// ================================
+//   Просмотр сохранённых заявок (для отладки)
+// ================================
+function showSavedRequests() {
+    const requests = JSON.parse(localStorage.getItem('repair_requests') || '[]');
+    console.log('Сохранённые заявки:', requests);
+    
+    // Можно также показать в интерфейсе (опционально)
+    if (requests.length > 0) {
+        console.table(requests);
+    }
+}
+
+// Вызываем при загрузке
+document.addEventListener('DOMContentLoaded', function() {
+    showSavedRequests();
+});
