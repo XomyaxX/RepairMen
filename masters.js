@@ -74,3 +74,26 @@ function showPopup(message, error = false) {
         popup.style.transform = "translateY(20px)";
     }, 2500);
 }
+function populateRequestInfo(){
+  const params = new URLSearchParams(location.search);
+  
+  // Получаем параметры из URL
+  const rawType = params.get('type');
+  const model = params.get('model');
+  const problem = params.get('problem');
+  
+  // Преобразуем тип техники в читаемый вид
+  const typeDisplay = TYPE_MAP[rawType] || rawType || 'Не указан';
+  
+  // Получаем элементы для отображения
+  const elType = document.getElementById('req-type');
+  const elModel = document.getElementById('req-model');
+  const elProblem = document.getElementById('req-problem');
+
+  // Заполняем данные
+  if (elType) elType.textContent = typeDisplay;
+  if (elModel) elModel.textContent = model || 'Не указана';
+  if (elProblem) elProblem.textContent = problem || 'Не указано';
+
+  console.log('Параметры заявки:', { rawType, typeDisplay, model, problem });
+}

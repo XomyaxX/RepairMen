@@ -37,12 +37,6 @@ document.querySelector('.request-form')?.addEventListener('submit', async functi
             throw new Error(result.message);
         }
 
-        // Переходим на страницу мастеров
-        setTimeout(() => {
-            const query = new URLSearchParams(data).toString();
-            window.location.href = `masters.html?${query}`;
-        }, 2000);
-
     } catch (error) {
         console.error('Ошибка отправки:', error);
         
@@ -55,15 +49,21 @@ document.querySelector('.request-form')?.addEventListener('submit', async functi
         localStorage.setItem('repair_requests', JSON.stringify(requests));
         
         showPopup("Заявка принята! Мастер свяжется с вами в течение 30 минут.");
-        
-        // Все равно переходим на страницу мастеров
-        setTimeout(() => {
-            const query = new URLSearchParams(data).toString();
-            window.location.href = `masters.html?${query}`;
-        }, 2000);
     }
-});
 
+    // В ЛЮБОМ СЛУЧАЕ переходим на страницу мастеров с параметрами
+    const queryParams = new URLSearchParams();
+    
+    // Добавляем только основные параметры для фильтрации
+    if (data.type) queryParams.append('type', data.type);
+    if (data.model) queryParams.append('model', data.model);
+    if (data.problem) queryParams.append('problem', data.problem);
+    
+    // Переходим на страницу мастеров
+    setTimeout(() => {
+        window.location.href = `masters.html?${queryParams.toString()}`;
+    }, 2000);
+});
 // ================================
 //   Функция всплывающего окна
 // ================================
