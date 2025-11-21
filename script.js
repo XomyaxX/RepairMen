@@ -164,19 +164,17 @@ if (window.location.pathname.includes('masters.html')) {
 //   Система управления темой
 // ================================
 function initTheme() {
-    // Проверяем сохранённую тему или системные настройки
     const savedTheme = localStorage.getItem('theme');
     const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     
     if (savedTheme) {
-        // Используем сохранённую тему пользователя
         document.body.classList.toggle('light', savedTheme === 'light');
     } else {
-        // Используем системные настройки
         document.body.classList.toggle('light', !systemPrefersDark);
     }
     
     updateThemeToggle();
+    showThemeHint();
 }
 
 function toggleTheme() {
@@ -192,9 +190,20 @@ function updateThemeToggle() {
     }
 }
 
+function showThemeHint() {
+    const isFirstVisit = !localStorage.getItem('theme_initialized');
+    
+    if (isFirstVisit) {
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const themeName = systemPrefersDark ? 'тёмную' : 'светлую';
+        
+        showPopup(`Автоматически включена ${themeName} тема. Нажмите на кнопку в правом верхнем углу для переключения.`);
+        localStorage.setItem('theme_initialized', 'true');
+    }
+}
+
 // Слушаем изменения системной темы
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    // Меняем тему только если пользователь не выбрал её вручную
     if (!localStorage.getItem('theme')) {
         document.body.classList.toggle('light', !e.matches);
         updateThemeToggle();
