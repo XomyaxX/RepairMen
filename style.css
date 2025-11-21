@@ -1,3 +1,485 @@
+/* ГЛАВНЫЙ ШРИФТ */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Тёмная тема */
+  --bg: #0a1929;
+  --text: #e8f1f8;
+  --card-bg: #112240;
+  --accent: #2e86de;
+  --accent-glow: rgba(46, 134, 222, 0.3);
+  --secondary: #54a0ff;
+  --success: #2ecc71;
+}
+
+body.light {
+  /* Светлая тема */
+  --bg: #f8f9fa;
+  --text: #2d3436;
+  --card-bg: #ffffff;
+  --accent: #0984e3;
+  --accent-glow: rgba(9, 132, 227, 0.2);
+  --secondary: #74b9ff;
+  --success: #00b894;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  padding: 20px;
+}
+
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--accent);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 50px;
+  cursor: pointer;
+  z-index: 1000;
+  color: white;
+  font-size: 16px;
+}
+
+/* Герой секция */
+.hero {
+  text-align: center;
+  padding: 80px 20px;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
+  color: white;
+  border-radius: 15px;
+  margin-bottom: 40px;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.hero .subtitle {
+  font-size: 1.2rem;
+  font-weight: 300;
+  margin-bottom: 30px;
+  opacity: 0.9;
+}
+
+.cta-button {
+  background: white;
+  color: var(--accent);
+  padding: 15px 40px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+/* Секция преимуществ */
+.benefits {
+  background: var(--card-bg);
+  padding: 40px;
+  border-radius: 15px;
+  margin-bottom: 40px;
+  border-left: 5px solid var(--accent);
+}
+
+.benefits h2 {
+  color: var(--accent);
+  font-size: 2rem;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.benefits ul {
+  list-style: none;
+  padding: 0;
+}
+
+.benefits ul li {
+  font-size: 1.1rem;
+  margin: 15px 0;
+  padding-left: 40px;
+  position: relative;
+}
+
+.benefits ul li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--success);
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+/* Форма заявки - УБИРАЕМ ВСЕ СКРЫТИЯ */
+.request-block {
+  background: var(--card-bg);
+  padding: 40px;
+  border-radius: 15px;
+  margin-bottom: 40px;
+  /* Убираем все эффекты скрытия */
+  opacity: 1 !important;
+  transform: none !important;
+  visibility: visible !important;
+}
+
+.request-block h2 {
+  color: var(--accent);
+  font-size: 2rem;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.request-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.request-form label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.request-form input,
+.request-form select,
+.request-form textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 1rem;
+  font-family: 'Roboto', sans-serif;
+}
+
+.request-form input:focus,
+.request-form select:focus,
+.request-form textarea:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+.request-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.address-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.button {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
+  color: white;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 15px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* Убираем все анимации */
+.reveal {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+  
+  .hero {
+    padding: 40px 20px;
+  }
+  
+  .hero h1 {
+    font-size: 2rem;
+  }
+  
+  .benefits,
+  .request-block {
+    padding: 30px 20px;
+  }
+  
+  .address-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* Стили для новых секций */
+.services, .advantages, .faq {
+  max-width: 1000px;
+  margin: 60px auto;
+  background: var(--card-bg);
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.services h2, .advantages h2, .faq h2 {
+  color: var(--accent);
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 2rem;
+}
+
+.service-category {
+  margin-bottom: 40px;
+  padding: 25px;
+  border-left: 4px solid var(--accent);
+  background: rgba(255,255,255,0.05);
+  border-radius: 0 10px 10px 0;
+}
+
+.service-category h3 {
+  color: var(--accent);
+  margin-bottom: 15px;
+  font-size: 1.4rem;
+}
+
+.service-category p {
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+.service-category ul {
+  list-style: none;
+  padding: 0;
+}
+
+.service-category ul li {
+  padding: 8px 0;
+  padding-left: 25px;
+  position: relative;
+}
+
+.service-category ul li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--success);
+  font-weight: bold;
+}
+
+/* Сетка преимуществ */
+.advantages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.advantage-card {
+  background: rgba(255,255,255,0.05);
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: transform 0.3s;
+}
+
+.advantage-card:hover {
+  transform: translateY(-5px);
+}
+
+.advantage-card h3 {
+  color: var(--accent);
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+}
+
+/* FAQ стили */
+.faq-item {
+  background: rgba(255,255,255,0.05);
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  border-left: 3px solid var(--accent);
+}
+
+.faq-item h3 {
+  color: var(--accent);
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .services, .advantages, .faq {
+    margin: 30px 20px;
+    padding: 25px 20px;
+  }
+  
+  .advantages-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* Стили для новых секций */
+.pricing, .testimonials, .brands {
+    max-width: 1200px;
+    margin: 80px auto;
+    padding: 0 20px;
+}
+
+.pricing h2, .testimonials h2, .brands h2 {
+    text-align: center;
+    color: var(--accent);
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.section-subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 50px;
+    opacity: 0.8;
+}
+
+/* Сетка цен */
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.pricing-card {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    text-align: center;
+    border-top: 5px solid var(--accent);
+    transition: transform 0.3s;
+}
+
+.pricing-card:hover {
+    transform: translateY(-10px);
+}
+
+.pricing-card img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    margin-bottom: 20px;
+}
+
+.pricing-card h3 {
+    color: var(--accent);
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.pricing-card ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.pricing-card ul li {
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Отзывы */
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 50px;
+}
+
+.testimonial-card {
+    background: var(--card-bg);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.client-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.client-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-right: 15px;
+}
+
+.review-meta {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+/* Бренды */
+.brands-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+    align-items: center;
+}
+
+.brands-grid img {
+    width: 100%;
+    height: 60px;
+    object-fit: contain;
+    filter: grayscale(100%);
+    opacity: 0.7;
+    transition: all 0.3s;
+}
+
+.brands-grid img:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .pricing-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .brands-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+}
 /* Стили для карточек мастеров */
 .masters-grid {
     display: grid;
