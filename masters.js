@@ -46,7 +46,7 @@ function populateRequestInfo() {
 // ================================
 //   Загрузка мастеров
 // ================================
-async function loadMasters() {
+async function loadMastersFromMastersJS() {
     try {
         const response = await fetch(SHEET_URL);
         const csv = await response.text();
@@ -118,27 +118,23 @@ async function loadMasters() {
 }
 
 // ================================
-//   Инициализация при загрузке
-// ================================
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('masters.js загружен');
-    populateRequestInfo();
-    loadMasters();
-});
-// ================================
 //   Просмотр сохранённых заявок (для отладки)
 // ================================
 function showSavedRequests() {
     const requests = JSON.parse(localStorage.getItem('repair_requests') || '[]');
     console.log('Сохранённые заявки:', requests);
     
-    // Можно также показать в интерфейсе (опционально)
     if (requests.length > 0) {
         console.table(requests);
     }
 }
 
-// Вызываем при загрузке
+// ================================
+//   Инициализация при загрузке
+// ================================
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('masters.js загружен');
+    populateRequestInfo();
+    loadMastersFromMastersJS();
     showSavedRequests();
 });

@@ -6,13 +6,16 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    
     <div class="container">
         <h1>Заявки на ремонт</h1>
         <div id="requests-list"></div>
-        <button onclick="clearRequests()">Очистить все заявки</button>
-        <button onclick="exportRequests()">Экспорт в JSON</button>
+        <button class="button" onclick="clearRequests()">Очистить все заявки</button>
+        <button class="button" onclick="exportRequests()">Экспорт в JSON</button>
     </div>
 
+    <script src="script.js"></script>
     <script>
         function loadRequests() {
             const requests = JSON.parse(localStorage.getItem('repair_requests') || '[]');

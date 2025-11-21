@@ -926,3 +926,40 @@ a {
     transform: scale(1.1);
     box-shadow: 0 6px 20px rgba(0,0,0,0.3);
 }
+/* Принудительные стили для темы */
+body {
+    background: var(--bg) !important;
+    color: var(--text) !important;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.light {
+    background: var(--bg) !important;
+    color: var(--text) !important;
+}
+
+/* Убедитесь, что все основные элементы используют CSS переменные */
+.hero, .benefits, .request-block, .services, .advantages, .faq,
+.pricing-card, .testimonial-card, .brand-logo-wrapper, .master-card,
+.request-info {
+    background: var(--card-bg) !important;
+    color: var(--text) !important;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Принудительно для всех текстовых элементов */
+h1, h2, h3, h4, h5, h6, p, span, div, a, li, label {
+    color: var(--text) !important;
+    transition: color 0.3s ease;
+}
+
+/* Для ссылок */
+a {
+    color: var(--accent) !important;
+}
+
+/* Для кнопок */
+.button, .cta-button {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%) !important;
+    color: white !important;
+}
