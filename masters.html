@@ -1,79 +1,40 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RepairMen — Мастера</title>
-
-    
-<link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>RepairMen — Мастера</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <button class="theme-toggle" id="themeToggle2">🌙/☀️</button>
 
-<header>Наши мастера RepairMen</header>
+  <header class="hero small">
+    <h1>Мастера RepairMen</h1>
+    <p class="subtitle">Подобрали под вашу заявку</p>
+  </header>
 
-<div class="container">
-    <div id="masters" class="masters-grid"></div>
-</div>
+  <main class="container">
+    <section class="request-info-card" id="request-info">
+      <h2>Ваша заявка</h2>
+      <p><strong>Тип техники:</strong> <span id="req-type">—</span></p>
+      <p><strong>Модель:</strong> <span id="req-model">—</span></p>
+      <p><strong>Описание:</strong> <span id="req-problem">—</span></p>
+    </section>
 
-<script>
-const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRY6KMZf4V6FC_dXc6yPEi1Yt1e267LVIC8Ewsm4IMTtEtwNOAeBEnrNsl-TWArKAylzdy6AipcUDf3/pub?output=csv";
-const urlParams = new URLSearchParams(window.location.search);
-const selectedType = urlParams.get("type");
+    <section class="masters-list">
+      <h2>Доступные мастера</h2>
+      <div id="masters" class="masters-grid"></div>
+    </section>
+  </main>
 
-async function loadMasters() {
-    try {
-        const response = await fetch(SHEET_URL);
-        const csv = await response.text();
-        const rows = csv.trim().split('\n').map(r => r.split(','));
-        const headers = rows[0].map(h => h.trim());
-        const data = rows.slice(1);
+  <div id="previewModal" class="modal hidden">
+    <div class="modal-inner">
+      <button class="modal-close" id="modalClose">✕</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
 
-        const mastersContainer = document.getElementById("masters");
-        mastersContainer.innerHTML = "";
-
-        data.forEach((row, i) => {
-            const master = Object.fromEntries(headers.map((h, j) => [h, row[j] || ""]));
-
-            // фильтрация по категории, если есть
-            if (selectedType && master.category && master.category !== selectedType) return;
-
-            const card = document.createElement("div");
-            card.className = "master-card";
-
-            card.innerHTML = `
-                <img class="master-photo" src="${master.photo || 'https://via.placeholder.com/120'}" alt="Фото мастера" />
-                <div class="master-name">${master.fio || 'Без имени'}</div>
-                <div class="master-exp">Опыт: ${master.exp || '0'} лет</div>
-                <a class="master-phone" href="tel:${master.phone || ''}">Позвонить: ${master.phone || '-'}</a>
-            `;
-
-            mastersContainer.appendChild(card);
-
-            setTimeout(() => card.classList.add("visible"), 100 * i);
-        });
-
-        // Запуск reveal после вставки карточек
-        revealCards();
-
-    } catch (e) {
-        console.error("Ошибка загрузки мастеров", e);
-    }
-}
-
-// Scroll reveal
-function revealCards() {
-    document.querySelectorAll('.master-card').forEach(card => {
-        const rect = card.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 50) {
-            card.classList.add('visible');
-        }
-    });
-}
-
-window.addEventListener('scroll', revealCards);
-window.addEventListener('load', loadMasters);
-
-</script>
+  <script src="masters.js" defer></script>
 </body>
 </html>
