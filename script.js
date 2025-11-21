@@ -79,12 +79,7 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e)
 });
 
 // ================================
-//   URL Google Sheets (CSV)
-// ================================
-const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRY6KMZf4V6FC_dXc6yPEi1Yt1e267LVIC8Ewsm4IMTtEtwNOAeBEnrNsl-TWArKAylzdy6AipcUDf3/pub?output=csv";
-
-// ================================
-//   Отправка заявки (упрощенная версия)
+//   Отправка заявки (только для index.html)
 // ================================
 document.querySelector('.request-form')?.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -156,86 +151,11 @@ function showPopup(message, error = false) {
     }, 3000);
 }
 
-// ================================
-//   Загрузка мастеров (только для masters.html)
-// ================================
-async function loadMasters() {
-    // Проверяем, находимся ли мы на странице masters.html
-    if (!window.location.pathname.includes('masters.html')) {
-        return;
-    }
-
-    const params = new URLSearchParams(window.location.search);
-    const selectedType = params.get("type");
-
-    try {
-        const response = await fetch(SHEET_URL);
-        const csv = await response.text();
-        const rows = csv.trim().split("\n").map(r => {
-            // Улучшенный парсинг CSV
-            return r.split(',').map(cell => cell.trim().replace(/^"|"$/g, ''));
-        });
-
-        const mastersBlock = document.getElementById("masters");
-        if (!mastersBlock) return;
-
-        mastersBlock.innerHTML = "";
-
-        // Пропускаем заголовок и обрабатываем данные
-        let mastersCount = 0;
-        rows.slice(1).forEach((row, index) => {
-            if (row.length < 5) return;
-
-            const [fio, experience, photo, phone, specialization] = row;
-
-            // Если пришёл тип — фильтруем
-            if (selectedType && specialization && !specialization.includes(selectedType)) {
-                return;
-            }
-
-            const card = document.createElement("div");
-            card.className = "master-card";
-            card.innerHTML = `
-                <img src="${photo || 'https://via.placeholder.com/150?text=No+Photo'}" 
-                     alt="Фото мастера" 
-                     onerror="this.src='https://via.placeholder.com/150?text=No+Photo'"
-                     style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%; margin-bottom: 15px;">
-                <h3>${fio || 'Мастер'}</h3>
-                <p><strong>Стаж:</strong> ${experience || 'не указан'}</p>
-                <p><strong>Специализация:</strong> ${specialization || 'не указана'}</p>
-                <p><strong>Телефон:</strong> <a href="tel:${phone || ''}" style="color: var(--accent); text-decoration: none;">${phone || 'не указан'}</a></p>
-            `;
-            mastersBlock.appendChild(card);
-
-            // Анимация появления
-            setTimeout(() => card.classList.add("visible"), index * 100);
-            mastersCount++;
-        });
-
-        // Если нет мастеров
-        if (mastersCount === 0) {
-            mastersBlock.innerHTML = `
-                <div style="text-align: center; padding: 40px; grid-column: 1 / -1;">
-                    <h3>Мастеров по выбранной категории не найдено</h3>
-                    <p>Попробуйте изменить параметры поиска или <a href="index.html">оставить заявку</a></p>
-                </div>
-            `;
-        }
-
-    } catch (error) {
-        console.error('Ошибка загрузки мастеров:', error);
-        const mastersBlock = document.getElementById("masters");
-        if (mastersBlock) {
-            mastersBlock.innerHTML = `
-                <div style="text-align: center; padding: 40px; grid-column: 1 / -1; color: #e74c3c;">
-                    <h3>Ошибка загрузки списка мастеров</h3>
-                    <p>Попробуйте обновить страницу позже</p>
-                </div>
-            `;
-        }
-    }
-}
-
+// Инициализируем тему при загрузке
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM загружен, инициализируем тему...');
+    initTheme();
+});
 // ================================
 //   Инициализация при загрузке
 // ================================
