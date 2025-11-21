@@ -813,3 +813,53 @@ body.light .brand-card:hover .brand-logo {
 .brand-logo-wrapper.gradient-border:hover::before {
     opacity: 1;
 }
+/* Стили для переключателя темы */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--accent);
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1000;
+    color: white;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+.theme-toggle:active {
+    transform: scale(0.95);
+}
+
+/* Анимация переключения */
+.theme-toggle {
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+/* Для светлой темы */
+body.light .theme-toggle {
+    background: var(--accent);
+    color: white;
+}
+/* Плавный переход для всех элементов */
+body {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Плавный переход для карточек и других элементов */
+.master-card, .pricing-card, .testimonial-card, .service-category, 
+.advantage-card, .faq-item, .request-block, .request-info {
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}

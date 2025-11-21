@@ -160,3 +160,46 @@ async function loadMasters() {
 if (window.location.pathname.includes('masters.html')) {
     document.addEventListener('DOMContentLoaded', loadMasters);
 }
+// ================================
+//   Система управления темой
+// ================================
+function initTheme() {
+    // Проверяем сохранённую тему или системные настройки
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (savedTheme) {
+        // Используем сохранённую тему пользователя
+        document.body.classList.toggle('light', savedTheme === 'light');
+    } else {
+        // Используем системные настройки
+        document.body.classList.toggle('light', !systemPrefersDark);
+    }
+    
+    updateThemeToggle();
+}
+
+function toggleTheme() {
+    const isLight = document.body.classList.toggle('light');
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    updateThemeToggle();
+}
+
+function updateThemeToggle() {
+    const toggleBtn = document.querySelector('.theme-toggle');
+    if (toggleBtn) {
+        toggleBtn.textContent = document.body.classList.contains('light') ? '🌙' : '☀️';
+    }
+}
+
+// Слушаем изменения системной темы
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    // Меняем тему только если пользователь не выбрал её вручную
+    if (!localStorage.getItem('theme')) {
+        document.body.classList.toggle('light', !e.matches);
+        updateThemeToggle();
+    }
+});
+
+// Инициализируем тему при загрузке
+document.addEventListener('DOMContentLoaded', initTheme);
