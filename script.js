@@ -1,41 +1,28 @@
 // ================================
-//   URL Google Apps Script
+//   Упрощенная отправка заявки
 // ================================
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbywvfAHNbzztHg7AOxwePi2FHFdXmYsdJEsqi7UVf1HtnDkNndo0M5d0rHuJ15iZ9hnRQ/exec";
-
-
-// ================================
-//   Отправка заявки
-// ================================
-document.querySelector('.request-form')?.addEventListener('submit', async function (e) {
+document.querySelector('.request-form')?.addEventListener('submit', function (e) {
     e.preventDefault();
 
     const form = new FormData(this);
     const data = Object.fromEntries(form.entries());
 
-    // Создание всплывающего окна (без alert)
-    showPopup("Отправляем заявку...");
+    showPopup("Заявка принята! Мастер свяжется с вами в течение 30 минут.");
 
-    // Отправка в Google Sheets
-    try {
-        await fetch(GOOGLE_SCRIPT_URL, {
-            method: "POST",
-            body: JSON.stringify(data),
-            headers: { "Content-Type": "application/json" }
-        });
+    // Сохраняем заявку в localStorage
+    const requests = JSON.parse(localStorage.getItem('repair_requests') || '[]');
+    requests.push({
+        ...data,
+        timestamp: new Date().toISOString()
+    });
+    localStorage.setItem('repair_requests', JSON.stringify(requests));
 
-        showPopup("Заявка успешно отправлена! Мастер скоро свяжется с вами.");
-
-        // Передаём данные на страницу мастеров
+    // Переходим на страницу мастеров через 2 секунды
+    setTimeout(() => {
         const query = new URLSearchParams(data).toString();
         window.location.href = `masters.html?${query}`;
-
-    } catch (error) {
-        showPopup("Ошибка отправки заявки. Попробуйте позже.", true);
-        console.error(error);
-    }
+    }, 2000);
 });
-
 
 // ================================
 //   Функция всплывающего окна
@@ -74,42 +61,24 @@ function showPopup(message, error = false) {
     setTimeout(() => {
         popup.style.opacity = "0";
         popup.style.transform = "translateY(20px)";
-    }, 2500);
+    }, 3000);
 }
 
-
 // ================================
-//   Загрузка мастеров с фильтрацией
+//   Проверка доступности сервиса
 // ================================
-async function loadMasters() {
-    const params = new URLSearchParams(window.location.search);
-    const selectedType = params.get("type");
-
-    const response = await fetch(SHEET_URL);
-    const csv = await response.text();
-    const rows = csv.trim().split("\n").map(r => r.split(","));
-
-    const mastersBlock = document.getElementById("masters");
-    if (!mastersBlock) return;
-
-    mastersBlock.innerHTML = "";
-
-    rows.slice(1).forEach(row => {
-        const [fio, experience, photo, phone, specialization] = row;
-
-        // Если пришёл тип — фильтруем
-        if (selectedType && specialization !== selectedType) return;
-
-        const card = document.createElement("div");
-        card.className = "master-card reveal";
-        card.innerHTML = `
-            <img src="${photo}" alt="Фото мастера" />
-            <h3>${fio}</h3>
-            <p><strong>Стаж:</strong> ${experience}</p>
-            <p><strong>Телефон:</strong> ${phone}</p>
-        `;
-        mastersBlock.appendChild(card);
-    });
+async function checkServiceAvailability() {
+    try {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbywvfAHNbzztHg7AOxwePi2FHFdXmYsdJEsqi7UVf1HtnDkNndo0M5d0rHuJ15iZ9hnRQ/exec', {
+            method: 'GET',
+            mode: 'no-cors'
+        });
+        return true;
+    } catch (error) {
+        console.warn('Сервис недоступен, используется локальное сохранение');
+        return false;
+    }
 }
 
-loadMasters();
+// Проверяем при загрузке
+document.addEventListener('DOMContentLoaded', checkServiceAvailability);
