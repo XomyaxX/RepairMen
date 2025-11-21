@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<<<<<<< HEAD
 <meta charset="UTF-8" />
 <title>RepairMen — ремонт бытовой техники</title>
 <link rel="stylesheet" href="style.css" />
@@ -225,104 +224,6 @@
 </form>
 </section>
 </main>
-=======
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RepairMen — Главная</title>
-    <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-    <header class="main-header">RepairMen — Ремонт бытовой техники</header>
-
-    <section class="hero">
-        <h1>Быстрый ремонт техники у вас дома</h1>
-        <p>Выезд мастера — бесплатно. Приедем сегодня.</p>
-    </section>
-
-    <section class="form-section">
-        <div class="form-card">
-            <h2>Оформить заявку</h2>
-            <div class="form-group">
-                <label>ФИО</label>
-                <input id="fio" type="text" placeholder="Ваше ФИО" />
-            </div>
-
-            <div class="form-group">
-                <label>Тип техники</label>
-                <select id="techType">
-                    <option value="">Выберите тип</option>
-                    <option value="wash">Стиральная машина</option>
-                    <option value="fridge">Холодильник</option>
-                    <option value="dishwasher">Посудомойка</option>
-                    <option value="oven">Варочная панель</option>
-                    <option value="conditioner">Кондиционер</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Модель</label>
-                <input id="model" type="text" placeholder="Например: Samsung XYZ200" />
-            </div>
-
-            <div class="form-group">
-                <label>Описание поломки</label>
-                <textarea id="problem" placeholder="Введите проблему"></textarea>
-            </div>
-
-            <div class="address-grid">
-                <div class="form-group">
-                    <label>Город</label>
-                    <input id="city" type="text" />
-                </div>
-                <div class="form-group">
-                    <label>Улица</label>
-                    <input id="street" type="text" />
-                </div>
-                <div class="form-group">
-                    <label>Дом</label>
-                    <input id="house" type="text" />
-                </div>
-                <div class="form-group">
-                    <label>Квартира</label>
-                    <input id="flat" type="text" />
-                </div>
-                <div class="form-group">
-                    <label>Домофон работает?</label>
-                    <select id="intercom">
-                        <option value="yes">Да</option>
-                        <option value="no">Нет</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Телефон</label>
-                <input id="phone" type="text" placeholder="8 900 000-00-00" />
-            </div>
-
-            <button id="findMaster" class="btn-primary">Найти мастера</button>
-        </div>
-    </section>
-
-<script>
-// Кнопка перехода на страницу мастеров с передачей данных
-
-const btn = document.getElementById("findMaster");
-btn.addEventListener("click", () => {
-    const type = document.getElementById("techType").value;
-    const model = document.getElementById("model").value;
-    const desc = document.getElementById("problem").value;
-
-    if (!type) {
-        alert("Выберите тип техники!");
-        return;
-    }
-
-    // Переход со всеми данными
-    window.location.href = `masters.html?type=${encodeURIComponent(type)}&model=${encodeURIComponent(model)}&desc=${encodeURIComponent(desc)}`;
-});
-</script>
->>>>>>> 38f75b8 (Update index.html)
 
 </body>
 </html>
