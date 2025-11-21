@@ -1,7 +1,7 @@
 // ================================
 //   URL Google Apps Script
 // ================================
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx-DDv0LP_K5BK1RNjak_K6bwfFc9eCVJmaT1IIjiVvlDNcYYTcC_kP_-uki7lSqyMj0w/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx1YJ-1zf0JCUTiYKzSI5GnFdE-IFdTtqpIdMFp1fQdXq6EVMZtTHzAcB7pOBKcO4iOeQ/exec";
 
 
 // ================================
