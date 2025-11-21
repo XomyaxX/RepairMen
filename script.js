@@ -4,66 +4,38 @@
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRY6KMZf4V6FC_dXc6yPEi1Yt1e267LVIC8Ewsm4IMTtEtwNOAeBEnrNsl-TWArKAylzdy6AipcUDf3/pub?output=csv";
 
 // ================================
-//   URL Google Apps Script (ЗАМЕНИТЕ НА ВАШ НОВЫЙ URL)
+//   Отправка заявки (упрощенная версия)
 // ================================
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbywvfAHNbzztHg7AOxwePi2FHFdXmYsdJEsqi7UVf1HtnDkNndo0M5d0rHuJ15iZ9hnRQ/exec";
-
-// ================================
-//   Отправка заявки
-// ================================
-document.querySelector('.request-form')?.addEventListener('submit', async function (e) {
+document.querySelector('.request-form')?.addEventListener('submit', function (e) {
     e.preventDefault();
 
     const form = new FormData(this);
     const data = Object.fromEntries(form.entries());
 
-    showPopup("Отправляем заявку...");
+    showPopup("Заявка принята! Мастер свяжется с вами в течение 30 минут.");
 
-    try {
-        // Пробуем отправить на Google Apps Script
-        const response = await fetch(GOOGLE_SCRIPT_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        });
+    // Сохраняем заявку в localStorage
+    const requests = JSON.parse(localStorage.getItem('repair_requests') || '[]');
+    requests.push({
+        ...data,
+        timestamp: new Date().toISOString()
+    });
+    localStorage.setItem('repair_requests', JSON.stringify(requests));
 
-        const result = await response.json();
-        
-        if (result.status === 'success') {
-            showPopup("Заявка успешно отправлена! Мастер скоро свяжется с вами.");
-        } else {
-            throw new Error(result.message);
-        }
-
-    } catch (error) {
-        console.error('Ошибка отправки:', error);
-        
-        // Резервный вариант: сохраняем в localStorage
-        const requests = JSON.parse(localStorage.getItem('repair_requests') || '[]');
-        requests.push({
-            ...data,
-            timestamp: new Date().toISOString()
-        });
-        localStorage.setItem('repair_requests', JSON.stringify(requests));
-        
-        showPopup("Заявка принята! Мастер свяжется с вами в течение 30 минут.");
-    }
-
-    // В ЛЮБОМ СЛУЧАЕ переходим на страницу мастеров с параметрами
+    // Переходим на страницу мастеров с параметрами
     const queryParams = new URLSearchParams();
     
-    // Добавляем только основные параметры для фильтрации
+    // Добавляем параметры для фильтрации и отображения
     if (data.type) queryParams.append('type', data.type);
     if (data.model) queryParams.append('model', data.model);
     if (data.problem) queryParams.append('problem', data.problem);
     
-    // Переходим на страницу мастеров
+    // Переходим на страницу мастеров через 2 секунды
     setTimeout(() => {
         window.location.href = `masters.html?${queryParams.toString()}`;
     }, 2000);
 });
+
 // ================================
 //   Функция всплывающего окна
 // ================================
@@ -120,8 +92,8 @@ async function loadMasters() {
         const response = await fetch(SHEET_URL);
         const csv = await response.text();
         const rows = csv.trim().split("\n").map(r => {
-            // Простой парсинг CSV (можно улучшить)
-            return r.split(',').map(cell => cell.trim());
+            // Улучшенный парсинг CSV
+            return r.split(',').map(cell => cell.trim().replace(/^"|"$/g, ''));
         });
 
         const mastersBlock = document.getElementById("masters");
@@ -130,29 +102,57 @@ async function loadMasters() {
         mastersBlock.innerHTML = "";
 
         // Пропускаем заголовок и обрабатываем данные
+        let mastersCount = 0;
         rows.slice(1).forEach((row, index) => {
+            if (row.length < 5) return;
+
             const [fio, experience, photo, phone, specialization] = row;
 
             // Если пришёл тип — фильтруем
-            if (selectedType && specialization !== selectedType) return;
+            if (selectedType && specialization && !specialization.includes(selectedType)) {
+                return;
+            }
 
             const card = document.createElement("div");
             card.className = "master-card";
             card.innerHTML = `
-                <img src="${photo}" alt="Фото мастера" onerror="this.src='https://via.placeholder.com/150?text=No+Photo'" />
-                <h3>${fio}</h3>
-                <p><strong>Стаж:</strong> ${experience}</p>
-                <p><strong>Телефон:</strong> <a href="tel:${phone}">${phone}</a></p>
+                <img src="${photo || 'https://via.placeholder.com/150?text=No+Photo'}" 
+                     alt="Фото мастера" 
+                     onerror="this.src='https://via.placeholder.com/150?text=No+Photo'"
+                     style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%; margin-bottom: 15px;">
+                <h3>${fio || 'Мастер'}</h3>
+                <p><strong>Стаж:</strong> ${experience || 'не указан'}</p>
+                <p><strong>Специализация:</strong> ${specialization || 'не указана'}</p>
+                <p><strong>Телефон:</strong> <a href="tel:${phone || ''}" style="color: var(--accent); text-decoration: none;">${phone || 'не указан'}</a></p>
             `;
             mastersBlock.appendChild(card);
 
             // Анимация появления
             setTimeout(() => card.classList.add("visible"), index * 100);
+            mastersCount++;
         });
+
+        // Если нет мастеров
+        if (mastersCount === 0) {
+            mastersBlock.innerHTML = `
+                <div style="text-align: center; padding: 40px; grid-column: 1 / -1;">
+                    <h3>Мастеров по выбранной категории не найдено</h3>
+                    <p>Попробуйте изменить параметры поиска или <a href="index.html">оставить заявку</a></p>
+                </div>
+            `;
+        }
 
     } catch (error) {
         console.error('Ошибка загрузки мастеров:', error);
-        showPopup("Ошибка загрузки списка мастеров", true);
+        const mastersBlock = document.getElementById("masters");
+        if (mastersBlock) {
+            mastersBlock.innerHTML = `
+                <div style="text-align: center; padding: 40px; grid-column: 1 / -1; color: #e74c3c;">
+                    <h3>Ошибка загрузки списка мастеров</h3>
+                    <p>Попробуйте обновить страницу позже</p>
+                </div>
+            `;
+        }
     }
 }
 
