@@ -430,13 +430,7 @@ body {
     margin-bottom: 15px;
 }
 
-.client-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: var(--accent);
-    margin-right: 15px;
-}
+
 
 .review-meta {
     margin-top: 15px;
@@ -645,8 +639,177 @@ body {
     object-fit: cover;
 }
 
-/* Уберите старый стиль для .client-avatar (если был) */
-.client-avatar {
-    /* Удалите background и другие старые свойства */
-    background: none; /* или просто удалите эту строку */
+/* Стили для секции брендов */
+.brands-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 25px;
+    margin-top: 50px;
+    align-items: center;
+}
+
+.brand-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.brand-card:hover {
+    transform: translateY(-5px);
+}
+
+.brand-logo-wrapper {
+    background: linear-gradient(135deg, var(--card-bg) 0%, rgba(255,255,255,0.1) 100%);
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 
+        0 8px 25px rgba(0,0,0,0.1),
+        inset 0 1px 0 rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.05);
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 120px;
+}
+
+.brand-card:hover .brand-logo-wrapper {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
+    box-shadow: 
+        0 12px 35px var(--accent-glow),
+        0 4px 15px rgba(0,0,0,0.2);
+    transform: scale(1.05);
+}
+
+.brand-logo {
+    width: 80px;
+    height: 40px;
+    object-fit: contain;
+    filter: grayscale(30%) brightness(0.9);
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.brand-card:hover .brand-logo {
+    filter: grayscale(0%) brightness(1.2);
+    opacity: 1;
+}
+
+.brand-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text);
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.brand-card:hover .brand-name {
+    opacity: 1;
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* Альтернативный вариант подложки - стеклянный эффект */
+.brand-logo-wrapper.glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Для светлой темы */
+body.light .brand-logo-wrapper {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    box-shadow: 
+        0 8px 25px rgba(0,0,0,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.8);
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+body.light .brand-card:hover .brand-logo-wrapper {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
+    box-shadow: 
+        0 12px 35px var(--accent-glow),
+        0 4px 15px rgba(0,0,0,0.1);
+}
+
+body.light .brand-logo {
+    filter: grayscale(50%) brightness(0.8);
+}
+
+body.light .brand-card:hover .brand-logo {
+    filter: grayscale(0%) brightness(1);
+}
+
+/* Адаптивность для брендов */
+@media (max-width: 768px) {
+    .brands-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+    
+    .brand-logo-wrapper {
+        width: 100px;
+        height: 100px;
+        padding: 20px;
+    }
+    
+    .brand-logo {
+        width: 60px;
+        height: 30px;
+    }
+    
+    .brand-name {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .brands-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .brand-logo-wrapper {
+        width: 90px;
+        height: 90px;
+        padding: 15px;
+    }
+}
+/* Эффект пульсации при наведении */
+@keyframes pulse-glow {
+    0% { box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+    50% { box-shadow: 0 8px 30px var(--accent-glow); }
+    100% { box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+}
+
+.brand-logo-wrapper.pulse:hover {
+    animation: pulse-glow 2s infinite;
+}
+
+/* Эффект градиентной обводки */
+.brand-logo-wrapper.gradient-border {
+    position: relative;
+    background: var(--card-bg);
+}
+
+.brand-logo-wrapper.gradient-border::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, var(--accent), var(--secondary), var(--accent));
+    border-radius: 22px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.brand-logo-wrapper.gradient-border:hover::before {
+    opacity: 1;
 }

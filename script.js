@@ -1,11 +1,11 @@
-// ================================
+
 //   URL Google Sheets (CSV)
-// ================================
+
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRY6KMZf4V6FC_dXc6yPEi1Yt1e267LVIC8Ewsm4IMTtEtwNOAeBEnrNsl-TWArKAylzdy6AipcUDf3/pub?output=csv";
 
-// ================================
-//   Отправка заявки (упрощенная версия)
-// ================================
+
+//   Отправка заявки
+
 document.querySelector('.request-form')?.addEventListener('submit', function (e) {
     e.preventDefault();
 
@@ -36,9 +36,9 @@ document.querySelector('.request-form')?.addEventListener('submit', function (e)
     }, 2000);
 });
 
-// ================================
+
 //   Функция всплывающего окна
-// ================================
+
 function showPopup(message, error = false) {
     let popup = document.getElementById("repairmen-popup");
 
@@ -76,9 +76,9 @@ function showPopup(message, error = false) {
     }, 3000);
 }
 
-// ================================
+
 //   Загрузка мастеров (только для masters.html)
-// ================================
+
 async function loadMasters() {
     // Проверяем, находимся ли мы на странице masters.html
     if (!window.location.pathname.includes('masters.html')) {
