@@ -1,135 +1,40 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RepairMen — Наши мастера</title>
-    <link rel="stylesheet" href="style.css" />
-    <style>
-        .masters-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            padding: 20px;
-        }
-        .master-card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 0 20px rgba(46, 134, 222, 0.2);
-            border: 1px solid rgba(255,255,255,0.08);
-            transition: transform 0.35s ease, box-shadow 0.35s ease;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        .master-card.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .master-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 0 25px var(--accent-glow);
-        }
-        .master-photo {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            border-radius: 12px;
-            margin-bottom: 15px;
-        }
-        .master-name {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-        .master-exp {
-            opacity: 0.8;
-            margin-bottom: 10px;
-        }
-        .master-phone {
-            display: inline-block;
-            background: var(--accent);
-            padding: 10px 20px;
-            border-radius: 8px;
-            color: white;
-            text-decoration: none;
-            margin-top: 10px;
-            transition: 0.3s;
-        }
-        .master-phone:hover {
-            background: var(--secondary);
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>RepairMen — Мастера</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <button class="theme-toggle" id="themeToggle2">🌙/☀️</button>
 
-<header style="text-align:center; font-size:2rem; padding:20px 0;">Наши мастера RepairMen</header>
+  <header class="hero small">
+    <h1>Мастера RepairMen</h1>
+    <p class="subtitle">Подобрали под вашу заявку</p>
+  </header>
 
-<div class="container">
-    <div id="masters" class="masters-grid"></div>
-</div>
+  <main class="container">
+    <section class="request-info-card" id="request-info">
+      <h2>Ваша заявка</h2>
+      <p><strong>Тип техники:</strong> <span id="req-type">—</span></p>
+      <p><strong>Модель:</strong> <span id="req-model">—</span></p>
+      <p><strong>Описание:</strong> <span id="req-problem">—</span></p>
+    </section>
 
-<script>
-const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRY6KMZf4V6FC_dXc6yPEi1Yt1e267LVIC8Ewsm4IMTtEtwNOAeBEnrNsl-TWArKAylzdy6AipcUDf3/pub?output=csv";
+    <section class="masters-list">
+      <h2>Доступные мастера</h2>
+      <div id="masters" class="masters-grid"></div>
+    </section>
+  </main>
 
-const urlParams = new URLSearchParams(window.location.search);
-const selectedType = urlParams.get("type");
+  <div id="previewModal" class="modal hidden">
+    <div class="modal-inner">
+      <button class="modal-close" id="modalClose">✕</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
 
-async function loadMasters() {
-    try {
-        const response = await fetch(SHEET_URL);
-        const csv = await response.text();
-
-        // CSV → массив
-        const rows = csv.split(/\r?\n/).map(r => r.split(","));
-        const headers = rows[0];
-        const data = rows.slice(1);
-
-        const mastersContainer = document.getElementById("masters");
-        mastersContainer.innerHTML = "";
-
-        data.forEach((row, i) => {
-            if (!row[0]) return;
-
-            const master = Object.fromEntries(headers.map((h, j) => [h.trim(), row[j]]));
-
-            if (selectedType && master.category !== selectedType) return;
-
-            const card = document.createElement("div");
-            card.className = "master-card";
-
-            card.innerHTML = `
-                <img class="master-photo" src="${master.photo}" alt="Фото мастера" />
-                <div class="master-name">${master.fio}</div>
-                <div class="master-exp">Опыт: ${master.exp} лет</div>
-                <a class="master-phone" href="tel:${master.phone}">Позвонить: ${master.phone}</a>
-            `;
-
-            mastersContainer.appendChild(card);
-
-            setTimeout(() => card.classList.add("visible"), 120 * i);
-        });
-    } catch (err) {
-        console.error("Ошибка загрузки мастеров", err);
-    }
-}
-
-loadMasters();
-</script>
-
-<script>
-function revealOnScroll() {
-  document.querySelectorAll('.master-card').forEach(card => {
-    const rect = card.getBoundingClientRect();
-    if (rect.top < window.innerHeight - 50) {
-      card.classList.add('visible');
-    }
-  });
-}
-
-window.addEventListener('scroll', revealOnScroll);
-window.addEventListener('load', revealOnScroll);
-</script>
-
+  <script src="masters.js" defer></script>
 </body>
 </html>
