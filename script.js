@@ -1,11 +1,97 @@
+// ================================
+//   Система управления темой
+// ================================
+function initTheme() {
+    console.log('Инициализация темы...');
+    
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    console.log('Сохранённая тема:', savedTheme);
+    console.log('Системная тема (тёмная):', systemPrefersDark);
+    
+    if (savedTheme === 'light') {
+        document.body.classList.add('light');
+        console.log('Установлена светлая тема (из сохранённых настроек)');
+    } else if (savedTheme === 'dark') {
+        document.body.classList.remove('light');
+        console.log('Установлена тёмная тема (из сохранённых настроек)');
+    } else {
+        // Используем системные настройки
+        if (systemPrefersDark) {
+            document.body.classList.remove('light');
+            console.log('Установлена тёмная тема (системная)');
+        } else {
+            document.body.classList.add('light');
+            console.log('Установлена светлая тема (системная)');
+        }
+    }
+    
+    updateThemeToggle();
+}
 
+function toggleTheme() {
+    console.log('Переключение темы...');
+    
+    const isCurrentlyLight = document.body.classList.contains('light');
+    console.log('Текущая тема светлая:', isCurrentlyLight);
+    
+    if (isCurrentlyLight) {
+        // Переключаем на тёмную
+        document.body.classList.remove('light');
+        localStorage.setItem('theme', 'dark');
+        console.log('Переключено на тёмную тему');
+    } else {
+        // Переключаем на светлую
+        document.body.classList.add('light');
+        localStorage.setItem('theme', 'light');
+        console.log('Переключено на светлую тему');
+    }
+    
+    updateThemeToggle();
+    
+    // Проверяем результат
+    console.log('Тема после переключения (светлая):', document.body.classList.contains('light'));
+}
+
+function updateThemeToggle() {
+    const toggleBtn = document.querySelector('.theme-toggle');
+    if (toggleBtn) {
+        const isLight = document.body.classList.contains('light');
+        toggleBtn.textContent = isLight ? '🌙' : '☀️';
+        toggleBtn.title = isLight ? 'Переключить на тёмную тему' : 'Переключить на светлую тему';
+        console.log('Кнопка обновлена. Тема светлая:', isLight);
+    }
+}
+
+// Слушаем изменения системной темы
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    // Меняем тему только если пользователь не выбрал её вручную
+    if (!localStorage.getItem('theme')) {
+        console.log('Системная тема изменилась:', e.matches ? 'тёмная' : 'светлая');
+        if (e.matches) {
+            document.body.classList.remove('light');
+        } else {
+            document.body.classList.add('light');
+        }
+        updateThemeToggle();
+    }
+});
+
+// Инициализируем тему при загрузке
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM загружен, инициализируем тему...');
+    initTheme();
+});
+
+// ================================
 //   URL Google Sheets (CSV)
-
+// ================================
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRY6KMZf4V6FC_dXc6yPEi1Yt1e267LVIC8Ewsm4IMTtEtwNOAeBEnrNsl-TWArKAylzdy6AipcUDf3/pub?output=csv";
 
-
-//   Отправка заявки
-
+// ================================
+//   Отправка заявки (упрощенная версия)
+// ================================
 document.querySelector('.request-form')?.addEventListener('submit', function (e) {
     e.preventDefault();
 
@@ -36,9 +122,9 @@ document.querySelector('.request-form')?.addEventListener('submit', function (e)
     }, 2000);
 });
 
-
+// ================================
 //   Функция всплывающего окна
-
+// ================================
 function showPopup(message, error = false) {
     let popup = document.getElementById("repairmen-popup");
 
@@ -76,9 +162,9 @@ function showPopup(message, error = false) {
     }, 3000);
 }
 
-
+// ================================
 //   Загрузка мастеров (только для masters.html)
-
+// ================================
 async function loadMasters() {
     // Проверяем, находимся ли мы на странице masters.html
     if (!window.location.pathname.includes('masters.html')) {
@@ -160,55 +246,3 @@ async function loadMasters() {
 if (window.location.pathname.includes('masters.html')) {
     document.addEventListener('DOMContentLoaded', loadMasters);
 }
-// ================================
-//   Система управления темой
-// ================================
-function initTheme() {
-    const savedTheme = localStorage.getItem('theme');
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    if (savedTheme) {
-        document.body.classList.toggle('light', savedTheme === 'light');
-    } else {
-        document.body.classList.toggle('light', !systemPrefersDark);
-    }
-    
-    updateThemeToggle();
-    showThemeHint();
-}
-
-function toggleTheme() {
-    const isLight = document.body.classList.toggle('light');
-    localStorage.setItem('theme', isLight ? 'light' : 'dark');
-    updateThemeToggle();
-}
-
-function updateThemeToggle() {
-    const toggleBtn = document.querySelector('.theme-toggle');
-    if (toggleBtn) {
-        toggleBtn.textContent = document.body.classList.contains('light') ? '🌙' : '☀️';
-    }
-}
-
-function showThemeHint() {
-    const isFirstVisit = !localStorage.getItem('theme_initialized');
-    
-    if (isFirstVisit) {
-        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const themeName = systemPrefersDark ? 'тёмную' : 'светлую';
-        
-        showPopup(`Автоматически включена ${themeName} тема. Нажмите на кнопку в правом верхнем углу для переключения.`);
-        localStorage.setItem('theme_initialized', 'true');
-    }
-}
-
-// Слушаем изменения системной темы
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    if (!localStorage.getItem('theme')) {
-        document.body.classList.toggle('light', !e.matches);
-        updateThemeToggle();
-    }
-});
-
-// Инициализируем тему при загрузке
-document.addEventListener('DOMContentLoaded', initTheme);
