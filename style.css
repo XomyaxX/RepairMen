@@ -1,28 +1,53 @@
-/* ГЛАВНЫЙ ШРИФТ */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap');
+/* =========================================
+   ИМПОРТ ШРИФТОВ (СОВРЕМЕННЫЙ И ЧИТАБЕЛЬНЫЙ)
+   ========================================= */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap');
 
 :root {
-  /* Тёмная тема */
-  --bg: #0a1929;
-  --text: #e8f1f8;
-  --card-bg: #112240;
-  --accent: #2e86de;
-  --accent-glow: rgba(46, 134, 222, 0.3);
-  --secondary: #54a0ff;
-  --success: #2ecc71;
+  /* Тёмная тема (Premium Dark) */
+  --bg: #0f172a;
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --card-bg: #1e293b;
+  --card-border: rgba(255, 255, 255, 0.05);
+  
+  /* Основной цвет (Доверие, Профессионализм) */
+  --primary: #3b82f6; 
+  --primary-dark: #2563eb;
+  
+  /* Цвет действия (CTA - Продающий Оранжевый) */
+  --action: #f97316;
+  --action-hover: #ea580c;
+  --action-shadow: rgba(249, 115, 22, 0.4);
+
+  --success: #10b981;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+  --radius: 16px;
 }
 
 body.light {
-  /* Светлая тема */
-  --bg: #f8f9fa;
-  --text: #2d3436;
+  /* Светлая тема (Clean & Trustworthy) */
+  --bg: #f8fafc;
+  --text: #1e293b;
+  --text-muted: #64748b;
   --card-bg: #ffffff;
-  --accent: #0984e3;
-  --accent-glow: rgba(9, 132, 227, 0.2);
-  --secondary: #74b9ff;
-  --success: #00b894;
+  --card-border: #e2e8f0;
+  
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  
+  --action: #f97316; /* Оранжевый работает отлично и на белом */
+  --action-hover: #ea580c;
+  --action-shadow: rgba(249, 115, 22, 0.25);
+  
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
+/* =========================================
+   БАЗОВЫЕ СТИЛИ
+   ========================================= */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -30,936 +55,404 @@ body.light {
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   background: var(--bg);
   color: var(--text);
   line-height: 1.6;
-  padding: 20px;
+  padding: 0;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.theme-toggle {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: var(--accent);
-  border: none;
-  padding: 10px 15px;
+h1, h2, h3, h4 {
+  font-family: 'Montserrat', sans-serif;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+a { text-decoration: none; transition: 0.3s; }
+ul { list-style: none; }
+
+/* Контейнер для выравнивания */
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* =========================================
+   КНОПКИ (ГЛАВНЫЙ ЭЛЕМЕНТ ПРОДАЖ)
+   ========================================= */
+.button, .cta-button {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--action) 0%, var(--action-hover) 100%);
+  color: white !important;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 16px 32px;
   border-radius: 50px;
+  border: none;
   cursor: pointer;
-  z-index: 1000;
-  color: white;
-  font-size: 16px;
+  box-shadow: 0 4px 15px var(--action-shadow);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Герой секция */
+.button:hover, .cta-button:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 25px var(--action-shadow);
+  background: linear-gradient(135deg, var(--action-hover) 0%, var(--action) 100%);
+}
+
+.button:active, .cta-button:active {
+  transform: translateY(1px);
+}
+
+/* Эффект блика на кнопке */
+.cta-button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: 0.5s;
+}
+
+.cta-button:hover::after {
+  left: 100%;
+}
+
+/* =========================================
+   HERO СЕКЦИЯ (ПЕРВЫЙ ЭКРАН)
+   ========================================= */
 .hero {
   text-align: center;
-  padding: 80px 20px;
-  background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
+  padding: 120px 20px;
+  /* Градиент с затемнением для читаемости текста */
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(37, 99, 235, 0.85));
   color: white;
-  border-radius: 15px;
-  margin-bottom: 40px;
+  margin-bottom: 60px;
+  position: relative;
+  /* Можно добавить фоновое изображение через style в HTML, здесь заглушка */
+  background-size: cover;
+  background-position: center;
+  border-radius: 0 0 30px 30px;
+  box-shadow: var(--shadow-lg);
 }
 
 .hero h1 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 20px;
+  font-size: 3.5rem; /* Крупнее */
+  font-weight: 800;
+  margin-bottom: 25px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
 }
 
 .hero .subtitle {
-  font-size: 1.2rem;
-  font-weight: 300;
-  margin-bottom: 30px;
-  opacity: 0.9;
-}
-
-.cta-button {
-  background: white;
-  color: var(--accent);
-  padding: 15px 40px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  border-radius: 50px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.cta-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-}
-
-/* Секция преимуществ */
-.benefits {
-  background: var(--card-bg);
-  padding: 40px;
-  border-radius: 15px;
+  font-size: 1.4rem;
+  font-weight: 400;
   margin-bottom: 40px;
-  border-left: 5px solid var(--accent);
+  opacity: 0.95;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.benefits h2 {
-  color: var(--accent);
-  font-size: 2rem;
-  margin-bottom: 30px;
-  text-align: center;
+/* =========================================
+   КАРТОЧКИ (ПРАЙС, МАСТЕРА)
+   ========================================= */
+.pricing-grid, .masters-grid, .advantages-grid {
+  display: grid;
+  gap: 30px;
+  padding: 20px 0;
 }
 
-.benefits ul {
-  list-style: none;
-  padding: 0;
+.pricing-grid { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+.masters-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.advantages-grid { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+
+.pricing-card, .master-card, .advantage-card, .testimonial-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 35px 25px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  /* Легкая тень по умолчанию */
+  box-shadow: var(--shadow-sm); 
 }
 
-.benefits ul li {
+/* Эффект "подъема" при наведении - создает ощущение ценности */
+.pricing-card:hover, .master-card:hover, .testimonial-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary);
+}
+
+/* Акцентная полоса сверху карточек */
+.pricing-card::before, .master-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: var(--primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: 0.3s;
+}
+
+.pricing-card:hover::before, .master-card:hover::before {
+  transform: scaleX(1);
+}
+
+.pricing-card h3, .master-card .master-name {
+  color: var(--primary);
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.pricing-card ul li {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--card-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pricing-card ul li strong {
+  color: var(--action); /* Цена выделена цветом действия */
   font-size: 1.1rem;
-  margin: 15px 0;
-  padding-left: 40px;
+}
+
+/* =========================================
+   ФОРМА ЗАЯВКИ (КОНВЕРСИОННЫЙ БЛОК)
+   ========================================= */
+.request-block {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 50px;
+  margin: 80px 0;
+  box-shadow: var(--shadow-lg);
+  border: 2px solid var(--primary); /* Выделяем форму рамкой */
   position: relative;
 }
 
-.benefits ul li::before {
-  content: '✓';
-  position: absolute;
-  left: 0;
-  color: var(--success);
-  font-weight: bold;
-  font-size: 1.5rem;
-}
-
-/* Форма заявки - УБИРАЕМ ВСЕ СКРЫТИЯ */
-.request-block {
-  background: var(--card-bg);
-  padding: 40px;
-  border-radius: 15px;
-  margin-bottom: 40px;
-  /* Убираем все эффекты скрытия */
-  opacity: 1 !important;
-  transform: none !important;
-  visibility: visible !important;
-}
-
 .request-block h2 {
-  color: var(--accent);
-  font-size: 2rem;
-  margin-bottom: 30px;
   text-align: center;
+  color: var(--primary);
+  margin-bottom: 40px;
+  font-size: 2.2rem;
 }
 
 .request-form {
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: 20px;
-}
-
-.request-form label {
-  display: block;
-  font-weight: 500;
-  margin-bottom: 8px;
-  color: var(--text);
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .request-form input,
 .request-form select,
 .request-form textarea {
   width: 100%;
-  padding: 12px 15px;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
+  padding: 16px 20px;
+  border-radius: 10px;
+  border: 2px solid var(--card-border);
   background: var(--bg);
   color: var(--text);
   font-size: 1rem;
-  font-family: 'Roboto', sans-serif;
+  transition: 0.3s;
 }
 
 .request-form input:focus,
 .request-form select:focus,
 .request-form textarea:focus {
-  border-color: var(--accent);
   outline: none;
-}
-
-.request-form textarea {
-  min-height: 100px;
-  resize: vertical;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
 }
 
 .address-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 15px;
-  margin: 20px 0;
 }
 
-.button {
-  background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
-  color: white;
-  font-weight: 600;
-  font-size: 1.1rem;
-  padding: 15px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  margin-top: 10px;
+.request-form button {
+  margin-top: 20px;
+  width: 100%;
+  font-size: 1.3rem; /* Крупная кнопка отправки */
 }
 
-/* Убираем все анимации */
-.reveal {
-  opacity: 1 !important;
-  transform: none !important;
-}
-
-/* Адаптивность */
-@media (max-width: 768px) {
-  body {
-    padding: 10px;
-  }
-  
-  .hero {
-    padding: 40px 20px;
-  }
-  
-  .hero h1 {
-    font-size: 2rem;
-  }
-  
-  .benefits,
-  .request-block {
-    padding: 30px 20px;
-  }
-  
-  .address-grid {
-    grid-template-columns: 1fr;
-  }
-}
-/* Стили для новых секций */
-.services, .advantages, .faq {
-  max-width: 1000px;
-  margin: 60px auto;
-  background: var(--card-bg);
-  padding: 40px;
-  border-radius: 15px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-}
-
-.services h2, .advantages h2, .faq h2 {
-  color: var(--accent);
+/* =========================================
+   БЛОКИ ДОВЕРИЯ (ОТЗЫВЫ И ПРЕИМУЩЕСТВА)
+   ========================================= */
+.section-subtitle {
   text-align: center;
-  margin-bottom: 40px;
-  font-size: 2rem;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  margin-bottom: 50px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.service-category {
-  margin-bottom: 40px;
-  padding: 25px;
-  border-left: 4px solid var(--accent);
-  background: rgba(255,255,255,0.05);
-  border-radius: 0 10px 10px 0;
+.services, .advantages, .faq {
+  margin: 80px auto;
 }
 
-.service-category h3 {
-  color: var(--accent);
-  margin-bottom: 15px;
-  font-size: 1.4rem;
+.services h2, .advantages h2, .faq h2, .testimonials h2, .brands h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: var(--text);
 }
-
-.service-category p {
-  margin-bottom: 15px;
-  line-height: 1.6;
-}
-
-.service-category ul {
-  list-style: none;
-  padding: 0;
-}
-
-.service-category ul li {
-  padding: 8px 0;
-  padding-left: 25px;
-  position: relative;
-}
-
-.service-category ul li::before {
-  content: '✓';
-  position: absolute;
-  left: 0;
-  color: var(--success);
-  font-weight: bold;
-}
-
-/* Сетка преимуществ */
-.advantages-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 25px;
-  margin-top: 30px;
+/* Выделение заголовков секций */
+.services h2::after, .advantages h2::after, .pricing h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: var(--action);
+    margin: 15px auto 0;
+    border-radius: 2px;
 }
 
 .advantage-card {
-  background: rgba(255,255,255,0.05);
-  padding: 25px;
-  border-radius: 12px;
   text-align: center;
-  border: 1px solid rgba(255,255,255,0.1);
-  transition: transform 0.3s;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
-
-.advantage-card:hover {
-  transform: translateY(-5px);
-}
-
 .advantage-card h3 {
-  color: var(--accent);
-  margin-bottom: 15px;
-  font-size: 1.3rem;
-}
-
-/* FAQ стили */
-.faq-item {
-  background: rgba(255,255,255,0.05);
-  margin-bottom: 20px;
-  padding: 20px;
-  border-radius: 10px;
-  border-left: 3px solid var(--accent);
-}
-
-.faq-item h3 {
-  color: var(--accent);
-  margin-bottom: 10px;
-  font-size: 1.2rem;
-}
-
-/* Адаптивность */
-@media (max-width: 768px) {
-  .services, .advantages, .faq {
-    margin: 30px 20px;
-    padding: 25px 20px;
-  }
-  
-  .advantages-grid {
-    grid-template-columns: 1fr;
-  }
-}
-/* Стили для новых секций */
-.pricing, .testimonials, .brands {
-    max-width: 1200px;
-    margin: 80px auto;
-    padding: 0 20px;
-}
-
-.pricing h2, .testimonials h2, .brands h2 {
-    text-align: center;
-    color: var(--accent);
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-}
-
-.section-subtitle {
-    text-align: center;
-    font-size: 1.2rem;
-    margin-bottom: 50px;
-    opacity: 0.8;
-}
-
-/* Сетка цен */
-.pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 30px;
-    margin-top: 50px;
-}
-
-.pricing-card {
-    background: var(--card-bg);
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    text-align: center;
-    border-top: 5px solid var(--accent);
-    transition: transform 0.3s;
-}
-
-.pricing-card:hover {
-    transform: translateY(-10px);
-}
-
-.pricing-card img {
-    width: 120px;
-    height: 120px;
-    object-fit: contain;
-    margin-bottom: 20px;
-}
-
-.pricing-card h3 {
-    color: var(--accent);
-    margin-bottom: 20px;
-    font-size: 1.5rem;
-}
-
-.pricing-card ul {
-    list-style: none;
-    padding: 0;
-    margin-bottom: 25px;
-    text-align: left;
-}
-
-.pricing-card ul li {
-    padding: 8px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-/* Отзывы */
-.testimonials-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 25px;
-    margin-top: 50px;
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: var(--primary);
 }
 
 .testimonial-card {
-    background: var(--card-bg);
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  background: var(--card-bg);
+  border-left: 5px solid var(--action); /* Оранжевый акцент */
 }
 
-.client-info {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
+.testimonial-card p {
+    font-style: italic;
+    font-size: 1.1rem;
+    margin: 15px 0;
 }
 
-
-
-.review-meta {
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    font-size: 0.9rem;
-    opacity: 0.7;
-}
-
-/* Бренды */
-.brands-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 30px;
-    margin-top: 50px;
-    align-items: center;
-}
-
-.brands-grid img {
-    width: 100%;
-    height: 60px;
-    object-fit: contain;
-    filter: grayscale(100%);
-    opacity: 0.7;
-    transition: all 0.3s;
-}
-
-.brands-grid img:hover {
-    filter: grayscale(0%);
-    opacity: 1;
-}
-
-/* Адаптивность */
-@media (max-width: 768px) {
-    .pricing-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .brands-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-    }
-}
-/* Стили для карточек мастеров */
-.masters-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 25px;
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.master-card {
-    background: var(--card-bg);
-    border-radius: 15px;
-    padding: 25px;
-    text-align: center;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-    transition: transform 0.3s, opacity 0.3s;
-    opacity: 0;
-    transform: translateY(20px);
-    border: 1px solid rgba(255,255,255,0.1);
-}
-
-.master-card.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.master-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+/* =========================================
+   ДОПОЛНИТЕЛЬНЫЕ ЭЛЕМЕНТЫ
+   ========================================= */
+.theme-toggle {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--text);
+  box-shadow: var(--shadow-lg);
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
 }
 
 .master-photo {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin: 0 auto 15px;
-    border: 3px solid var(--accent);
-}
-
-.master-name {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--accent);
-    margin-bottom: 10px;
-}
-
-.master-exp {
-    color: var(--text);
-    opacity: 0.8;
-    margin-bottom: 15px;
-    font-size: 0.95rem;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 15px;
+  border: 3px solid var(--primary);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
 .master-phone {
-    display: inline-block;
-    background: var(--accent);
-    color: white;
-    padding: 10px 20px;
-    border-radius: 25px;
-    text-decoration: none;
-    font-weight: 500;
-    transition: background 0.3s;
+  background: transparent;
+  color: var(--primary) !important;
+  border: 2px solid var(--primary);
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-weight: 600;
+  margin-top: 10px;
+  display: inline-block;
 }
 
 .master-phone:hover {
-    background: var(--secondary);
-    color: white;
+  background: var(--primary);
+  color: white !important;
 }
 
-/* Стили для модального окна */
-.hidden {
-    display: none !important;
-}
-
-/* Адаптивность для мастеров */
-@media (max-width: 768px) {
-    .masters-grid {
-        grid-template-columns: 1fr;
-        padding: 10px;
-    }
-    
-    .master-card {
-        padding: 20px;
-    }
-}
-
-/* Стили для информации о заявке */
-.request-info {
-    background: var(--card-bg) !important;
-    padding: 25px !important;
-    margin: 30px auto !important;
-    border-radius: 12px !important;
-    border-left: 4px solid var(--accent);
-}
-
-.request-info h3 {
-    color: var(--accent);
-    margin-bottom: 15px;
-    text-align: center;
-}
-
-.request-info p {
-    margin: 10px 0;
-    padding: 8px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-/* Стили для блока информации о заявке */
-.request-info {
-    background: var(--card-bg) !important;
-    padding: 25px !important;
-    margin: 30px auto !important;
-    border-radius: 12px !important;
-    border-left: 4px solid var(--accent);
-    max-width: 800px !important;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.request-info h3 {
-    color: var(--accent);
-    margin-bottom: 20px;
-    text-align: center;
-    font-size: 1.4rem;
-}
-
-.request-info p {
-    margin: 12px 0;
-    padding: 8px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    font-size: 1rem;
-}
-
-.request-info strong {
-    color: var(--accent);
-    min-width: 180px;
-    display: inline-block;
-}
-
-/* Адаптивность для блока заявки */
-@media (max-width: 768px) {
-    .request-info {
-        margin: 20px 10px !important;
-        padding: 20px 15px !important;
-    }
-    
-    .request-info p {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-    }
-    
-    .request-info strong {
-        min-width: auto;
-    }
-}
-/* Стили для аватаров в отзывах */
-.client-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 15px;
-    object-fit: cover;
-}
-
-/* Стили для секции брендов */
-.brands-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 25px;
-    margin-top: 50px;
-    align-items: center;
-}
-
-.brand-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    transition: transform 0.3s ease;
-}
-
-.brand-card:hover {
-    transform: translateY(-5px);
-}
-
+/* Логотипы брендов - делаем монохромными и аккуратными */
 .brand-logo-wrapper {
-    background: linear-gradient(135deg, var(--card-bg) 0%, rgba(255,255,255,0.1) 100%);
-    padding: 25px;
-    border-radius: 20px;
-    box-shadow: 
-        0 8px 25px rgba(0,0,0,0.1),
-        inset 0 1px 0 rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.05);
-    margin-bottom: 15px;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 120px;
-    height: 120px;
-}
-
-.brand-card:hover .brand-logo-wrapper {
-    background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
-    box-shadow: 
-        0 12px 35px var(--accent-glow),
-        0 4px 15px rgba(0,0,0,0.2);
-    transform: scale(1.05);
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  border: 1px solid var(--card-border);
+  transition: 0.3s;
 }
 
 .brand-logo {
-    width: 80px;
-    height: 40px;
-    object-fit: contain;
-    filter: grayscale(30%) brightness(0.9);
-    opacity: 0.8;
-    transition: all 0.3s ease;
+  max-width: 80%;
+  max-height: 60px;
+  filter: grayscale(100%);
+  opacity: 0.5;
+  transition: 0.3s;
 }
 
 .brand-card:hover .brand-logo {
-    filter: grayscale(0%) brightness(1.2);
-    opacity: 1;
+  filter: grayscale(0%);
+  opacity: 1;
 }
 
-.brand-name {
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--text);
-    opacity: 0.8;
-    transition: all 0.3s ease;
+.brand-card:hover .brand-logo-wrapper {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-sm);
 }
 
-.brand-card:hover .brand-name {
-    opacity: 1;
-    color: var(--accent);
-    font-weight: 600;
-}
-
-/* Альтернативный вариант подложки - стеклянный эффект */
-.brand-logo-wrapper.glass {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Для светлой темы */
-body.light .brand-logo-wrapper {
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-    box-shadow: 
-        0 8px 25px rgba(0,0,0,0.08),
-        inset 0 1px 0 rgba(255,255,255,0.8);
-    border: 1px solid rgba(0,0,0,0.05);
-}
-
-body.light .brand-card:hover .brand-logo-wrapper {
-    background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
-    box-shadow: 
-        0 12px 35px var(--accent-glow),
-        0 4px 15px rgba(0,0,0,0.1);
-}
-
-body.light .brand-logo {
-    filter: grayscale(50%) brightness(0.8);
-}
-
-body.light .brand-card:hover .brand-logo {
-    filter: grayscale(0%) brightness(1);
-}
-
-/* Адаптивность для брендов */
+/* =========================================
+   МОБИЛЬНАЯ АДАПТАЦИЯ
+   ========================================= */
 @media (max-width: 768px) {
-    .brands-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-    }
-    
-    .brand-logo-wrapper {
-        width: 100px;
-        height: 100px;
-        padding: 20px;
-    }
-    
-    .brand-logo {
-        width: 60px;
-        height: 30px;
-    }
-    
-    .brand-name {
-        font-size: 0.8rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .brands-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
-    }
-    
-    .brand-logo-wrapper {
-        width: 90px;
-        height: 90px;
-        padding: 15px;
-    }
-}
-/* Эффект пульсации при наведении */
-@keyframes pulse-glow {
-    0% { box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
-    50% { box-shadow: 0 8px 30px var(--accent-glow); }
-    100% { box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
-}
-
-.brand-logo-wrapper.pulse:hover {
-    animation: pulse-glow 2s infinite;
-}
-
-/* Эффект градиентной обводки */
-.brand-logo-wrapper.gradient-border {
-    position: relative;
-    background: var(--card-bg);
-}
-
-.brand-logo-wrapper.gradient-border::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(45deg, var(--accent), var(--secondary), var(--accent));
-    border-radius: 22px;
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.brand-logo-wrapper.gradient-border:hover::before {
-    opacity: 1;
-}
-/* Стили для переключателя темы */
-.theme-toggle {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: var(--accent);
-    border: none;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    cursor: pointer;
-    z-index: 1000;
-    color: white;
-    font-size: 1.2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-}
-
-.theme-toggle:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-}
-
-.theme-toggle:active {
-    transform: scale(0.95);
-}
-
-/* Анимация переключения */
-.theme-toggle {
-    transition: background 0.3s ease, transform 0.2s ease;
-}
-
-/* Для светлой темы */
-body.light .theme-toggle {
-    background: var(--accent);
-    color: white;
-}
-/* Плавный переход для всех элементов */
-body {
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* Плавный переход для карточек и других элементов */
-.master-card, .pricing-card, .testimonial-card, .service-category, 
-.advantage-card, .faq-item, .request-block, .request-info {
-    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-/* Принудительные стили для темы */
-body {
-    background: var(--bg) !important;
-    color: var(--text) !important;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-body.light {
-    background: var(--bg) !important;
-    color: var(--text) !important;
-}
-
-/* Убедитесь, что все основные элементы используют CSS переменные */
-.hero, .benefits, .request-block, .services, .advantages, .faq,
-.pricing-card, .testimonial-card, .brand-logo-wrapper, .master-card,
-.request-info {
-    background: var(--card-bg) !important;
-    color: var(--text) !important;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* Принудительно для всех текстовых элементов */
-h1, h2, h3, h4, h5, h6, p, span, div, a, li, label {
-    color: var(--text) !important;
-    transition: color 0.3s ease;
-}
-
-/* Для ссылок */
-a {
-    color: var(--accent) !important;
-}
-
-/* Для кнопок */
-.button, .cta-button {
-    background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%) !important;
-    color: white !important;
-}
-
-/* Стили для переключателя темы */
-.theme-toggle {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: var(--accent) !important;
-    border: none;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    cursor: pointer;
-    z-index: 1000;
-    color: white !important;
-    font-size: 1.2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-}
-
-.theme-toggle:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-}
-/* Принудительные стили для темы */
-body {
-    background: var(--bg) !important;
-    color: var(--text) !important;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-body.light {
-    background: var(--bg) !important;
-    color: var(--text) !important;
-}
-
-/* Убедитесь, что все основные элементы используют CSS переменные */
-.hero, .benefits, .request-block, .services, .advantages, .faq,
-.pricing-card, .testimonial-card, .brand-logo-wrapper, .master-card,
-.request-info {
-    background: var(--card-bg) !important;
-    color: var(--text) !important;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* Принудительно для всех текстовых элементов */
-h1, h2, h3, h4, h5, h6, p, span, div, a, li, label {
-    color: var(--text) !important;
-    transition: color 0.3s ease;
-}
-
-/* Для ссылок */
-a {
-    color: var(--accent) !important;
-}
-
-/* Для кнопок */
-.button, .cta-button {
-    background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%) !important;
-    color: white !important;
+  .hero {
+    padding: 80px 20px;
+    border-radius: 0 0 20px 20px;
+  }
+  
+  .hero h1 { font-size: 2.2rem; }
+  
+  .request-block {
+    padding: 25px;
+    margin: 40px 0;
+  }
+  
+  .request-block h2 { font-size: 1.8rem; }
+  
+  .button, .cta-button {
+    width: 100%; /* На мобильном кнопка во всю ширину - удобнее жать */
+  }
+  
+  .pricing-grid, .masters-grid {
+    grid-template-columns: 1fr;
+  }
 }
