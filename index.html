@@ -1,275 +1,213 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<title>RepairMen — ремонт бытовой техники</title>
-<link rel="stylesheet" href="style.css" />
-<script defer src="script.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RepairMen — Профессиональный ремонт техники</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script defer src="script.js"></script>
 </head>
 <body>
-<button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Сменить тему">🌙</button>
 
-<header class="hero">
-<h1>RepairMen — быстрый и надёжный ремонт техники</h1>
-<p class="subtitle">Выезд мастера бесплатно • Приезжаем в день обращения • Гарантия на ремонт</p>
-<button class="cta-button" onclick="document.getElementById('request-form').scrollIntoView({behavior:'smooth'})">Вызвать мастера</button>
-</header>
-
-<main>
-
-<!-- Секция с типовыми поломками и ценами -->
-<section class="pricing reveal">
-    <h2>Примеры работ и цены</h2>
-    <p class="section-subtitle">Прозрачный прайс-лист на самые частые услуги</p>
-    
-    <div class="pricing-grid">
-        <div class="pricing-card">
-            <img src="img/appliances/washing-machine.png" alt="Стиральная машина">
-            <h3>Ремонт стиральных машин</h3>
-            <ul>
-                <li>Не сливает воду — <strong>от 450 руб.</strong></li>
-                <li>Не греет воду — <strong>от 1200 руб.</strong></li>
-                <li>Не включается — <strong>от 350 руб.</strong></li>
-                <li>Течет — <strong>от 800 руб.</strong></li>
-            </ul>
-            <button class="button" onclick="document.getElementById('request-form').scrollIntoView({behavior:'smooth'})">Вызвать мастера</button>
+    <header class="hero" style="background-image: linear-gradient(rgba(15, 23, 42, 0.85), rgba(37, 99, 235, 0.4)), url('img/hero-bg.jpg');">
+        <div class="container">
+            <h1>Быстрый ремонт бытовой техники с гарантией</h1>
+            <p class="subtitle">Мастер приедет через 45 минут. Диагностика бесплатно при ремонте.</p>
+            <button class="cta-button" onclick="document.getElementById('request-form').scrollIntoView({behavior:'smooth'})">Вызвать мастера</button>
+            <p style="margin-top: 15px; font-size: 0.9rem; opacity: 0.8;">Работаем ежедневно с 8:00 до 22:00</p>
         </div>
-        
-        <div class="pricing-card">
-            <img src="img/appliances/fridge.png" alt="Холодильник">
-            <h3>Ремонт холодильников</h3>
-            <ul>
-                <li>Не морозит — <strong>от 1500 руб.</strong></li>
-                <li>Сильно намораживает — <strong>от 1000 руб.</strong></li>
-                <li>Течет — <strong>от 900 руб.</strong></li>
-                <li>Шумит — <strong>от 600 руб.</strong></li>
-            </ul>
-            <button class="button" onclick="document.getElementById('request-form').scrollIntoView({behavior:'smooth'})">Вызвать мастера</button>
-        </div>
+    </header>
 
-        <!-- Добавьте остальные категории по аналогии -->
-        <div class="pricing-card">
-            <img src="img/appliances/computer.png" alt="Компьютер">
-            <h3>Ремонт компьютеров</h3>
-            <ul>
-                <li>Замена процессора — <strong>от 800 руб.</strong></li>
-                <li>Чистка от пыли — <strong>от 500 руб.</strong></li>
-                <li>Установка ОС — <strong>от 1000 руб.</strong></li>
-            </ul>
-            <button class="button" onclick="document.getElementById('request-form').scrollIntoView({behavior:'smooth'})">Вызвать мастера</button>
-        </div>
-
-        <div class="pricing-card">
-            <img src="img/appliances/tv.png" alt="Телевизор">
-            <h3>Ремонт телевизоров</h3>
-            <ul>
-                <li>Замена матрицы — <strong>от 2500 руб.</strong></li>
-                <li>Ремонт блока питания — <strong>от 1200 руб.</strong></li>
-                <li>Настройка — <strong>от 500 руб.</strong></li>
-            </ul>
-            <button class="button" onclick="document.getElementById('request-form').scrollIntoView({behavior:'smooth'})">Вызвать мастера</button>
-        </div>
-    </div>
-</section>
-
-<!-- Секция с отзывами -->
-<section class="testimonials reveal">
-    <h2>Отзывы наших клиентов</h2>
-    <div class="testimonials-grid">
-        <div class="testimonial-card">
-            <div class="client-info">
-                <img src="img/testimonials/client1.jpg" alt="Елена И." class="client-avatar">
-                <div>
-                    <h4>Елена И.</h4>
-                    <p>г. Омск</p>
+    <main>
+        <section class="advantages reveal">
+            <h2>Почему 1500+ клиентов выбрали нас?</h2>
+            <div class="advantages-grid">
+                <div class="advantage-card">
+                    <div style="font-size: 2.5rem; margin-bottom: 10px;">🚀</div>
+                    <h3>Срочный выезд</h3>
+                    <p>Приезжаем в день обращения. 80% поломок чиним за 1 визит.</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <div style="font-size: 2.5rem; margin-bottom: 10px;">🛡️</div>
+                    <h3>Честная гарантия</h3>
+                    <p>Официальная гарантия до 2 лет на работу и запчасти.</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <div style="font-size: 2.5rem; margin-bottom: 10px;">💰</div>
+                    <h3>Фиксированная цена</h3>
+                    <p>Стоимость озвучиваем ДО начала работ. Никаких сюрпризов.</p>
+                </div>
+                
+                <div class="advantage-card">
+                    <div style="font-size: 2.5rem; margin-bottom: 10px;">🎓</div>
+                    <h3>Опытные мастера</h3>
+                    <p>Средний стаж наших специалистов — 7 лет.</p>
                 </div>
             </div>
-            <p>"Спасибо за отличную работу! Приятно обращаться в ваш сервис. Работают быстро, качественно, недорого! Очень довольна. Рекомендую всем знакомым!"</p>
-            <div class="review-meta">
-                <span>Отремонтирована стиральная машина Indesit</span>
-            </div>
-        </div>
-        
-        <div class="testimonial-card">
-            <div class="client-info">
-                <img src="img/testimonials/client2.jpg" alt="Анатолий" class="client-avatar">
-                <div>
-                    <h4>Анатолий</h4>
-                    <p>г. Омск</p>
+        </section>
+
+        <section class="pricing reveal">
+            <h2>Популярные услуги и цены</h2>
+            <p class="section-subtitle">Работаем прозрачно. Оплата только за результат.</p>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <img src="img/appliances/washing-machine.png" alt="Стиральная машина" onerror="this.style.display='none'">
+                    <h3>Стиральные машины</h3>
+                    <ul>
+                        <li>Не сливает воду <strong>от 450 ₽</strong></li>
+                        <li>Не греет воду <strong>от 1200 ₽</strong></li>
+                        <li>Шумит при отжиме <strong>от 800 ₽</strong></li>
+                        <li>Не включается <strong>от 350 ₽</strong></li>
+                    </ul>
+                    <button class="button" onclick="document.getElementById('request-form').scrollIntoView({behavior:'smooth'})">Заказать ремонт</button>
+                </div>
+                
+                <div class="pricing-card">
+                    <img src="img/appliances/fridge.png" alt="Холодильник" onerror="this.style.display='none'">
+                    <h3>Холодильники</h3>
+                    <ul>
+                        <li>Не морозит <strong>от 1500 ₽</strong></li>
+                        <li>Намерзает лед <strong>от 1000 ₽</strong></li>
+                        <li>Течет вода <strong>от 900 ₽</strong></li>
+                        <li>Замена фреона <strong>от 2000 ₽</strong></li>
+                    </ul>
+                    <button class="button" onclick="document.getElementById('request-form').scrollIntoView({behavior:'smooth'})">Заказать ремонт</button>
+                </div>
+
+                <div class="pricing-card">
+                    <img src="img/appliances/tv.png" alt="Телевизор" onerror="this.style.display='none'">
+                    <h3>Телевизоры</h3>
+                    <ul>
+                        <li>Нет изображения <strong>от 1500 ₽</strong></li>
+                        <li>Нет звука <strong>от 1200 ₽</strong></li>
+                        <li>Не ловит каналы <strong>от 500 ₽</strong></li>
+                        <li>Ремонт подсветки <strong>от 2500 ₽</strong></li>
+                    </ul>
+                    <button class="button" onclick="document.getElementById('request-form').scrollIntoView({behavior:'smooth'})">Заказать ремонт</button>
                 </div>
             </div>
-            <p>"Все оказалось сложно, но замечательно починено! Мастер был на высоте. И вполне за приемлемые деньги. Качество не может быть бесплатным!"</p>
-            <div class="review-meta">
-                <span>Отремонтирована варочная панель</span>
+        </section>
+
+        <section class="testimonials reveal">
+            <h2>Что говорят клиенты</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="client-info">
+                        <img src="img/testimonials/client1.jpg" alt="Елена" class="client-avatar" onerror="this.src='https://ui-avatars.com/api/?name=Елена+И&background=random'">
+                        <div>
+                            <h4>Елена И.</h4>
+                            <div style="color: gold;">⭐⭐⭐⭐⭐</div>
+                        </div>
+                    </div>
+                    <p>«Мастер приехал вовремя, починил стиралку за час. Очень вежливый, всё объяснил, дал советы по уходу. Цена адекватная, как и договаривались.»</p>
+                    <div class="review-meta">
+                        <span>Стиральная машина Indesit</span>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="client-info">
+                        <img src="img/testimonials/client2.jpg" alt="Анатолий" class="client-avatar" onerror="this.src='https://ui-avatars.com/api/?name=Анатолий&background=random'">
+                        <div>
+                            <h4>Анатолий</h4>
+                            <div style="color: gold;">⭐⭐⭐⭐⭐</div>
+                        </div>
+                    </div>
+                    <p>«Думал придется покупать новую варочную панель, но ребята спасли! Сделали сложный ремонт электроники. Работает как новая уже месяц.»</p>
+                    <div class="review-meta">
+                        <span>Варочная панель Bosch</span>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</section>
-<!-- Секция с брендами -->
-<section class="brands reveal">
-    <h2>Ремонтируем технику всех популярных брендов</h2>
-    <div class="brands-grid">
-        <div class="brand-card">
-            <div class="brand-logo-wrapper">
-                <img src="img/brands/samsung.png" alt="Samsung" class="brand-logo">
+        </section>
+
+        <section class="brands reveal">
+            <h2>Чиним технику любых брендов</h2>
+            <div class="brands-grid">
+                <div class="brand-card"><div class="brand-logo-wrapper"><img src="img/brands/samsung.png" alt="Samsung" class="brand-logo"></div></div>
+                <div class="brand-card"><div class="brand-logo-wrapper"><img src="img/brands/lg.png" alt="LG" class="brand-logo"></div></div>
+                <div class="brand-card"><div class="brand-logo-wrapper"><img src="img/brands/bosch.png" alt="Bosch" class="brand-logo"></div></div>
+                <div class="brand-card"><div class="brand-logo-wrapper"><img src="img/brands/indesit.png" alt="Indesit" class="brand-logo"></div></div>
+                <div class="brand-card"><div class="brand-logo-wrapper"><img src="img/brands/beko.png" alt="Beko" class="brand-logo"></div></div>
             </div>
-            <span class="brand-name">Samsung</span>
-        </div>
-        
-        <div class="brand-card">
-            <div class="brand-logo-wrapper">
-                <img src="img/brands/lg.png" alt="LG" class="brand-logo">
+        </section>
+
+        <section class="faq reveal">
+            <h2>Часто задаваемые вопросы</h2>
+            <div class="faq-item">
+                <h3>Сколько стоит диагностика?</h3>
+                <p>Диагностика проводится <strong>бесплатно</strong> при согласии на ремонт. В случае отказа — 500 рублей.</p>
             </div>
-            <span class="brand-name">LG</span>
-        </div>
-        
-        <div class="brand-card">
-            <div class="brand-logo-wrapper">
-                <img src="img/brands/bosch.png" alt="Bosch" class="brand-logo">
+            <div class="faq-item">
+                <h3>Нужно ли везти технику в сервис?</h3>
+                <p>Нет! 90% ремонтов мы выполняем на дому. У мастера с собой все необходимые инструменты и запчасти.</p>
             </div>
-            <span class="brand-name">Bosch</span>
+        </section>
+
+        <section class="request-block" id="request-form">
+            <h2>Оставьте заявку на ремонт</h2>
+            <p style="text-align: center; margin-bottom: 30px; opacity: 0.8;">Перезвоним в течение 5 минут для уточнения деталей</p>
+            
+            <form class="request-form">
+                <label>Ваше имя:
+                    <input type="text" name="fio" required placeholder="Например: Александр">
+                </label>
+
+                <label>Телефон для связи:
+                    <input type="tel" name="phone" required placeholder="+7 (999) 000-00-00">
+                </label>
+
+                <div class="address-grid">
+                    <label>Тип техники:
+                        <select name="type" required>
+                            <option value="" disabled selected>Выберите из списка...</option>
+                            <option value="wash">Стиральная машина</option>
+                            <option value="fridge">Холодильник</option>
+                            <option value="tv">Телевизор</option>
+                            <option value="pc">Компьютер / Ноутбук</option>
+                            <option value="panel">Варочная панель / Плита</option>
+                            <option value="conditioners">Кондиционер</option>
+                            <option value="other">Другое</option>
+                        </select>
+                    </label>
+                    <label>Модель (если знаете):
+                        <input type="text" name="model" placeholder="Например: LG Direct Drive">
+                    </label>
+                </div>
+
+                <label>Что случилось?
+                    <textarea name="problem" required placeholder="Опишите проблему своими словами. Например: не крутит барабан, выдает ошибку E4..."></textarea>
+                </label>
+
+                <div class="address-grid">
+                    <label>Улица: <input type="text" name="street" required></label>
+                    <label>Дом: <input type="text" name="house" required></label>
+                    <label>Кв./Офис: <input type="text" name="flat"></label>
+                </div>
+
+                <button class="cta-button" type="submit">🚀 Вызвать мастера</button>
+                <p style="font-size: 0.8rem; text-align: center; margin-top: 10px; opacity: 0.6;">Нажима кнопку, вы соглашаетесь с обработкой персональных данных</p>
+            </form>
+        </section>
+    </main>
+
+    <footer style="background: var(--card-bg); padding: 40px 20px; text-align: center; margin-top: 50px; border-top: 1px solid var(--card-border);">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h2 style="color: var(--primary); margin-bottom: 10px;">RepairMen</h2>
+            <p>Профессиональный сервис по ремонту бытовой техники</p>
+            <br>
+            <p>📞 <a href="tel:+79990000000" style="font-weight: bold; font-size: 1.2rem;">+7 (999) 000-00-00</a></p>
+            <p>📍 г. Омск, ул. Ленина, д. 1</p>
+            <br>
+            <p style="font-size: 0.9rem; opacity: 0.5;">© 2023 RepairMen. Все права защищены.</p>
         </div>
-        
-        <div class="brand-card">
-            <div class="brand-logo-wrapper">
-                <img src="img/brands/indesit.png" alt="Indesit" class="brand-logo">
-            </div>
-            <span class="brand-name">Indesit</span>
-        </div>
-        
-        <div class="brand-card">
-            <div class="brand-logo-wrapper">
-                <img src="img/brands/beko.png" alt="Beko" class="brand-logo">
-            </div>
-            <span class="brand-name">Beko</span>
-        </div>
-
-    </div>
-</section>
-
-<section class="services reveal">
-  <h2>Наши услуги по ремонту бытовой техники</h2>
-  
-  <div class="service-category">
-    <h3>Ремонт крупной бытовой техники</h3>
-    <p>Профессиональный ремонт холодильников, стиральных машин, посудомоек, духовых шкафов на дому. Быстро диагностируем и устраняем неисправности: не работает мотор, течет охлаждающая жидкость, сломался электронный блок управления.</p>
-    <ul>
-      <li>Ремонт холодильников, стиральных машин, посудомоечных машин, электрических и газовых плит</li>
-      <li>Бесплатный выезд мастера на дом</li>
-      <li>Гарантия на все виды работ</li>
-    </ul>
-  </div>
-
-  <div class="service-category">
-    <h3>Ремонт теле- и аудиотехники</h3>
-    <p>Диагностика и ремонт всех видов телевизоров: LCD, LED, плазменных панелей. Замена матриц, блоков питания, ремонт материнских плат.</p>
-    <ul>
-      <li>Ремонт телевизоров, домашних кинотеатров, аудиосистем</li>
-      <li>Замена дисплейных модулей, ЖК-матриц</li>
-      <li>Настройка и подключение оборудования</li>
-    </ul>
-  </div>
-
-  <div class="service-category">
-    <h3>Ремонт мелкой бытовой техники</h3>
-    <p>Вернем к жизни ваши пылесосы, микроволновки, электрочайники, кофемашины. Замена шнуров питания, ремонт кнопок, чистка внутренних механизмов.</p>
-    <ul>
-      <li>Ремонт пылесосов, микроволновых печей, чайников, кофемашин</li>
-      <li>Быстрая диагностика неисправностей</li>
-      <li>Оригинальные запчасти</li>
-    </ul>
-  </div>
-</section>
-<section class="advantages reveal">
-  <h2>Почему клиенты выбирают именно нас?</h2>
-  
-  <div class="advantages-grid">
-    <div class="advantage-card">
-      <h3>Быстрый выезд</h3>
-      <p>Мастер приедет в течение 2-3 часов после вашего звонка. Работаем без выходных с 8:00 до 22:00.</p>
-    </div>
-    
-    <div class="advantage-card">
-      <h3>Опытные мастера</h3>
-      <p>Наши специалисты имеют опыт работы от 5 лет и регулярно проходят повышение квалификации.</p>
-    </div>
-    
-    <div class="advantage-card">
-      <h3>Гарантия качества</h3>
-      <p>Даем официальную гарантию до 2 лет на все виды работ и установленные запчасти.</p>
-    </div>
-    
-    <div class="advantage-card">
-      <h3>Прозрачные цены</h3>
-      <p>Фиксированная стоимость ремонта, которая не меняется в процессе работы. Никаких скрытых платежей.</p>
-    </div>
-  </div>
-</section>
-<section class="faq reveal">
-  <h2>Часто задаваемые вопросы</h2>
-  
-  <div class="faq-item">
-    <h3>Сколько стоит диагностика?</h3>
-    <p>Диагностика бесплатна, если вы соглашаетесь на ремонт. При отказе от ремонта - 500 рублей.</p>
-  </div>
-  
-  <div class="faq-item">
-    <h3>Сколько времени занимает ремонт?</h3>
-    <p>80% ремонтов мы выполняем за 1-2 часа прямо у вас дома. Сложные случаи требуют 1-3 дней.</p>
-  </div>
-  
-  <div class="faq-item">
-    <h3>Даете ли вы гарантию?</h3>
-    <p>Да, гарантия от 6 месяцев до 2 лет в зависимости от сложности ремонта и установленных запчастей.</p>
-  </div>
-  
-  <div class="faq-item">
-    <h3>Работаете с любыми брендами?</h3>
-    <p>Да, ремонтируем технику всех популярных брендов: Samsung, LG, Bosch, Indesit, Beko, Philips и другие.</p>
-  </div>
-</section>
-
-
-<section class="request-block" id="request-form">
-<h2>Оставить заявку на ремонт</h2>
-<form class="request-form">
-<label>ФИО:<input type="text" name="fio" required></label>
-
-<label>Тип техники:
-<select name="type" required>
-<option value="wash">Стиральная машина</option>
-<option value="fridge">Холодильник</option>
-<option value="pc">Персональный компьютер</option>
-<option value="laptops">Ноутбук</option>
-<option value="panel">Варочная панель</option>
-<option value="conditioners">Кондиционер</option>
-<option value="tv">Телевизор</option>
-</select>
-</label>
-
-<label>Модель:<input type="text" name="model" required></label>
-<label>Описание поломки:<textarea name="problem" required></textarea></label>
-
-<div class="address-grid">
-<label>Город:<input type="text" name="city" required></label>
-<label>Улица:<input type="text" name="street" required></label>
-<label>Дом:<input type="text" name="house" required></label>
-<label>Квартира:<input type="text" name="flat"></label>
-<label>Домофон работает?:
-<select name="intercom" required>
-<option value="yes">Да</option>
-<option value="no">Нет</option>
-</select>
-</label>
-</div>
-
-<label>Телефон:<input type="tel" name="phone" required></label>
-<label>Дополнительная информация:<textarea name="extra"></textarea></label>
-
-<button class="button" type="submit">Отправить заявку</button>
-</form>
-</section>
-</main>
+    </footer>
 
 </body>
 </html>
