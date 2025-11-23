@@ -1,5 +1,5 @@
 // ================================
-//   Система управления темой (Оставляем как есть)
+//   Система управления темой
 // ================================
 function initTheme() {
     const savedTheme = localStorage.getItem('theme');
@@ -29,10 +29,11 @@ function updateThemeToggle() {
     if (toggleBtn) toggleBtn.textContent = document.body.classList.contains('light') ? '🌙' : '☀️';
 }
 
+// Ссылка на таблицу мастеров
 var SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRY6KMZf4V6FC_dXc6yPEi1Yt1e267LVIC8Ewsm4IMTtEtwNOAeBEnrNsl-TWArKAylzdy6AipcUDf3/pub?output=csv";
 
 // ================================
-//   Маппинг типов (Оставляем)
+//   Словарь для отображения (Красивые названия)
 // ================================
 const TYPE_MAP = {
     wash: "Стиральная машина",
@@ -42,7 +43,20 @@ const TYPE_MAP = {
     panel: "Варочная панель",
     conditioners: "Кондиционер",
     tv: "Телевизор",
-    other: "Техника"
+    other: "Другая техника"
+};
+
+// ================================
+//   Словарь для поиска (Корни слов для фильтра)
+// ================================
+const SEARCH_KEYWORDS = {
+    wash: "стиральн",      // найдет "стиральная", "стиральных"
+    fridge: "холодильн",   // найдет "холодильник", "холодильников"
+    pc: "компьютер",
+    laptops: "ноутбук",
+    panel: "варочн",       // найдет "варочная", "варочной"
+    conditioners: "кондиционер",
+    tv: "телевиз"          // найдет "телевизор", "телевизоров"
 };
 
 // ================================
@@ -58,13 +72,12 @@ function populateRequestInfo() {
 }
 
 // ================================
-//   ЗАГРУЗКА МАСТЕРОВ (ОБНОВЛЕННАЯ ВЕРСИЯ)
+//   ЗАГРУЗКА МАСТЕРОВ
 // ================================
 async function loadMastersFromMastersJS() {
     try {
         const response = await fetch(SHEET_URL);
         const csv = await response.text();
-        // Парсим CSV, пропуская пустые строки
         const rows = csv.trim().split('\n').map(r => r.split(',').map(c => c.trim().replace(/^"|"$/g, '')));
         
         const mastersContainer = document.getElementById("masters");
@@ -72,37 +85,46 @@ async function loadMastersFromMastersJS() {
         
         mastersContainer.innerHTML = "";
         
+        // Получаем тип из URL
         const params = new URLSearchParams(window.location.search);
-        const selectedType = params.get("type");
+        const urlType = params.get("type");
+        
+        // Определяем ключевое слово для поиска (на русском)
+        // Если тип не найден в словаре, ищем по самому слову
+        const filterKeyword = SEARCH_KEYWORDS[urlType] || urlType || "";
+        
+        console.log(`Фильтр: Тип URL='${urlType}', Ключевое слово='${filterKeyword}'`);
+
         let hasMasters = false;
 
-        // Генератор случайного рейтинга для реалистичности (4.7 - 5.0)
+        // Генераторы для красоты
         const getRandomRating = () => (4.7 + Math.random() * 0.3).toFixed(1);
         const getRandomReviews = () => Math.floor(20 + Math.random() * 100);
 
-        // Пропускаем заголовок (i=1)
+        // Перебираем строки (пропускаем заголовок)
         for (let i = 1; i < rows.length; i++) {
             const row = rows[i];
             if (row.length < 5) continue;
             
             const [fio, experience, photo, phone, specialization] = row;
 
-            // Фильтрация
-            if (selectedType && specialization && !specialization.toLowerCase().includes(selectedType.toLowerCase())) {
-                continue;
+            // ЛОГИКА ФИЛЬТРАЦИИ
+            // Если фильтр задан, проверяем, есть ли ключевое слово в специализации мастера
+            if (filterKeyword) {
+                if (!specialization || !specialization.toLowerCase().includes(filterKeyword.toLowerCase())) {
+                    continue; // Пропускаем, если не совпадает
+                }
             }
             
-            // Если фото нет, ставим красивую заглушку с инициалами
+            // Заглушка для фото
             const safePhoto = photo && photo.length > 5 ? photo : `https://ui-avatars.com/api/?name=${encodeURIComponent(fio)}&background=3b82f6&color=fff&size=150`;
 
             const card = document.createElement("div");
             card.className = "master-card";
-            // Добавляем стиль для анимации появления
             card.style.opacity = "0";
             card.style.transform = "translateY(20px)";
             card.style.transition = "all 0.5s ease";
 
-            // HTML КАРТОЧКИ: Добавлены рейтинг, бейджи и кнопка
             card.innerHTML = `
                 <div style="position: absolute; top: 15px; right: 15px; background: #e0f2fe; color: #0284c7; padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: bold;">
                     🛡️ Проверен
@@ -127,7 +149,6 @@ async function loadMastersFromMastersJS() {
             
             mastersContainer.appendChild(card);
             
-            // Анимация появления
             setTimeout(() => {
                 card.style.opacity = "1";
                 card.style.transform = "translateY(0)";
@@ -139,8 +160,8 @@ async function loadMastersFromMastersJS() {
         if (!hasMasters) {
             mastersContainer.innerHTML = `
                 <div style="grid-column: 1 / -1; text-align: center; padding: 50px; background: var(--card-bg); border-radius: 15px; border: 1px dashed var(--card-border);">
-                    <h3>Свободные мастера по вашей категории сейчас заняты</h3>
-                    <p style="margin: 15px 0;">Оставьте заявку диспетчеру, и мы найдем специалиста вручную.</p>
+                    <h3>По вашему запросу "${TYPE_MAP[urlType] || urlType}" свободных мастеров сейчас нет</h3>
+                    <p style="margin: 15px 0;">Попробуйте выбрать другую категорию или позвоните диспетчеру.</p>
                     <button class="cta-button" onclick="window.location.href='index.html#request-form'">Связаться с диспетчером</button>
                 </div>
             `;
@@ -152,7 +173,7 @@ async function loadMastersFromMastersJS() {
     }
 }
 
-// Запуск
+// Запуск при загрузке
 document.addEventListener('DOMContentLoaded', function() {
     initTheme();
     populateRequestInfo();
